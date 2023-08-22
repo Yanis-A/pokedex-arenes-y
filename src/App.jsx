@@ -1,9 +1,12 @@
+import AppRoutes from './router/Routes.jsx'
 import './App.css'
+import Navigation from './components/Navigation.jsx'
 
 function App() {
   return (
     <>
-      <h1>App</h1>
+      <Navigation />
+      <AppRoutes />
     </>
   )
 }
