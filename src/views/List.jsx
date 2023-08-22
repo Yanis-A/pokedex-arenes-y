@@ -1,3 +1,4 @@
+import Pagination from "../components/Pagination";
 import PokemonList from "../components/PokemonList";
 import Logo from "../assets/logoV2.png";
 
@@ -21,8 +22,9 @@ function List() {
     <div className="container-fluid">
       <div className="d-flex flex-column align-items-center my-3">
         <img width={300} src={Logo} alt="ReactDex Logo" />
-        <p className="fs-5">Welcome <span style={{color: "#ff0000"}} className="fw-bold">{adjectives[randomIndex]}</span> trainer! 👋</p>
+        <p>Welcome <span style={{color: "#ff0000"}} className="fw-bold">{adjectives[randomIndex]}</span> trainer! 👋</p>
         <h1>Find Pokémons</h1>
+        <Pagination />
         <PokemonList />
       </div>
     </div>

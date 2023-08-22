@@ -1,29 +1,44 @@
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setLoading,
+  setPreviousPage,
+  setNextPage,
+} from "../service/globalPropsSlice";
+
 import { useState, useEffect } from "react";
 import { fetchPokemons } from "../service/service";
 import Error from "../components/Error";
 
 function PokemonList() {
-  // Fetch pokemons
+  const { isLoading } = useSelector(
+    (state) => state.globalProps
+  );
+  const dispatch = useDispatch();
   const [pokemons, setPokemons] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const limit = 10;
+  const offset = 1;
   
   useEffect(() => {
     const fetchPokemonData = async () => {
       try {
-        setLoading(true); // Début du chargement
-        const data = await fetchPokemons(10); // Fetch 10 pokemons
-        setPokemons(data);
-        setLoading(false); // Fin du chargement
+        dispatch(setLoading(true)); // Début du chargement
+        const data = await fetchPokemons(limit, offset); // Fetch 10 pokemons
+        setPokemons(data.results);
+        dispatch(setPreviousPage(data.previous));
+        dispatch(setNextPage(data.next));
+        console.log('POKEMON LIST ',data.results);
+        dispatch(setLoading(false)); // Fin du chargement
       } catch (error) {
         setError(error);
-        setLoading(false); // Fin du chargement avec erreur
+        dispatch(setLoading(false)); // Fin du chargement avec erreur
       }
     };
     fetchPokemonData();
-  }, []);
+  }, [dispatch]);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="spinner-border text-warning" role="status">
         <span className="visually-hidden">Loading...</span>
@@ -37,8 +52,10 @@ function PokemonList() {
 
   return (
     <>
-      {pokemons.map((pokemon) => (
-        <div key={pokemon.name}>{pokemon.name}</div>
+      {pokemons.map((pokemon, index) => (
+        <div key={pokemon.name}>
+          <a href={pokemon.url} target="_blank" rel="noreferrer">#{(index+1)+offset} - {pokemon.name}</a>
+        </div>
       ))}
     </>
   );

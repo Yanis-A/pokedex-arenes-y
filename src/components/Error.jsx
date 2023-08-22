@@ -1,5 +1,4 @@
-import propTypes from "prop-types";
-
+import { PropTypes, errorPropTypes } from "../service/proptypes";
 function Error({ err }) {
     return (
         <p className="rounded bg-danger text-white p-1 shadow shadow-sm">
@@ -9,7 +8,7 @@ function Error({ err }) {
 }
 
 Error.propTypes = {
-    err: propTypes.string.isRequired
+    err: PropTypes.shape(errorPropTypes).isRequired,
 };
 
 export default Error;
