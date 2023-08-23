@@ -1,32 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isLoading: false,
-  currentPage: 1,
-  previousPage: null,
-  nextPage: null,
+  search: "",
+  team: []
 };
 
 const globalPropsSlice = createSlice({
   name: "globalProps",
   initialState,
   reducers: {
-    setLoading: (state, action) => {
-      state.isLoading = action.payload;
+    setSearch: (state, action) => {
+      state.search = action.payload;
     },
-    setCurrentPage: (state, action) => {
-      state.currentPage = action.payload;
-    },
-    setPreviousPage: (state, action) => {
-      state.previousPage = action.payload;
-    },
-    setNextPage: (state, action) => {
-      state.nextPage = action.payload;
+    setTeam: (state, action) => {
+      state.search = action.payload;
     },
   },
 });
 
-export const { setLoading, setCurrentPage, setPreviousPage, setNextPage } =
+export const { setSearch, setTeam } =
   globalPropsSlice.actions;
 
 export default globalPropsSlice.reducer;

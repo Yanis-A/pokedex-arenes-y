@@ -1,44 +1,31 @@
-import { useSelector, useDispatch } from "react-redux";
-import {
-  setLoading,
-  setPreviousPage,
-  setNextPage,
-} from "../service/globalPropsSlice";
-
 import { useState, useEffect } from "react";
 import { fetchPokemons } from "../service/service";
 import Error from "../components/Error";
+import Card from "../components/Card";
 
 function PokemonList() {
-  const { isLoading } = useSelector(
-    (state) => state.globalProps
-  );
-  const dispatch = useDispatch();
   const [pokemons, setPokemons] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  const limit = 10;
-  const offset = 1;
   
   useEffect(() => {
-    const fetchPokemonData = async () => {
+    const fetchPokemonsData = async () => {
       try {
-        dispatch(setLoading(true)); // Début du chargement
-        const data = await fetchPokemons(limit, offset); // Fetch 10 pokemons
+        setLoading(true);
+        setError(null);
+        const data = await fetchPokemons();
         setPokemons(data.results);
-        dispatch(setPreviousPage(data.previous));
-        dispatch(setNextPage(data.next));
-        console.log('POKEMON LIST ',data.results);
-        dispatch(setLoading(false)); // Fin du chargement
+        setLoading(false);
       } catch (error) {
         setError(error);
-        dispatch(setLoading(false)); // Fin du chargement avec erreur
+        console.error("Error fetching pokemons: ", error);
+        setLoading(false);
       }
     };
-    fetchPokemonData();
-  }, [dispatch]);
+    fetchPokemonsData();
+  }, []);
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="spinner-border text-warning" role="status">
         <span className="visually-hidden">Loading...</span>
@@ -51,13 +38,15 @@ function PokemonList() {
   }
 
   return (
-    <>
-      {pokemons.map((pokemon, index) => (
-        <div key={pokemon.name}>
-          <a href={pokemon.url} target="_blank" rel="noreferrer">#{(index+1)+offset} - {pokemon.name}</a>
-        </div>
-      ))}
-    </>
+    <div className="container-fluid">
+      <div className="row">
+        {pokemons.map((pokemon, index) => (
+          <div key={index} className="col m-1 p-0 d-flex flex-wrap justify-content-center">
+            <Card url={pokemon.url} />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 

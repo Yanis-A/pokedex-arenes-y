@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/logoV2.png";
 
-
 function Navigation() {
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav className="navbar navbar-expand-lg sticky-top bg-body-tertiary">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
           <img width={150} src={logo} alt="ReactDex Logo" />
@@ -31,6 +30,13 @@ function Navigation() {
               <Link to="/pokedex" className="nav-link">
                 Pokedex
               </Link>
+            </li>
+            <li className="nav-item">
+            <div className="input-group">
+              <input type="text" className="form-control" placeholder="Search Pokémon" aria-label="Search Pokémon" aria-describedby="button-addon2" />
+              <button className="btn btn-outline-secondary" type="button" id="button-addon2">🔎</button>
+            </div>
+
             </li>
           </ul>
           <ul className="navbar-nav ml-auto my-0 mb-2 mb-lg-0">
