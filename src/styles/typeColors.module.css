@@ -1,4 +1,77 @@
-/* Regular opacity */
+/* Text color */
+.bug_txt {
+  color: #a8b820;
+}
+
+.dark_txt {
+  color: #705848;
+}
+
+.dragon_txt {
+  color: #7038f8;
+}
+
+.electric_txt {
+  color: #f8d030;
+}
+
+.fairy_txt {
+  color: #ee99ac;
+}
+
+.fighting_txt {
+  color: #c03028;
+}
+
+.fire_txt {
+  color: #f08030;
+}
+
+.flying_txt {
+  color: #a890f0;
+}
+
+.ghost_txt {
+  color: #705898;
+}
+
+.grass_txt {
+  color: #78c850;
+}
+
+.ground_txt {
+  color: #e0c068;
+}
+
+.ice_txt {
+  color: #98d8d8;
+}
+
+.normal_txt {
+  color: #a8a878;
+}
+
+.poison_txt {
+  color: #a040a0;
+}
+
+.psychic_txt {
+  color: #f85888;
+}
+
+.rock_txt {
+  color: #b8a038;
+}
+
+.steel_txt {
+  color: #b8b8d0;
+}
+
+.water_txt {
+  color: #6890f0;
+}
+
+/* Background - Regular opacity */
 .bug {
   background-color: #a8b820;
   color: black;
@@ -89,94 +162,261 @@
   color: white;
 }
 
-/* Low opacity */
+/* Background - Medium opacity */
 
-.bug_light {
+.bug_medium {
   background-color: rgba(168, 184, 32, 0.6);
   color: black;
 }
 
-.dark_light {
+.dark_medium {
   background-color: rgba(112, 88, 72, 0.6);
   color: white;
 }
 
-.dragon_light {
+.dragon_medium {
   background-color: rgba(112, 56, 248, 0.6);
   color: white;
 }
 
-.electric_light {
+.electric_medium {
   background-color: rgba(248, 208, 48, 0.6);
   color: black;
 }
 
-.fairy_light {
+.fairy_medium {
   background-color: rgba(238, 153, 172, 0.6);
   color: black;
 }
 
-.fighting_light {
+.fighting_medium {
   background-color: rgba(192, 48, 40, 0.6);
   color: white;
 }
 
-.fire_light {
+.fire_medium {
   background-color: rgba(240, 128, 48, 0.6);
   color: white;
 }
 
-.flying_light {
+.flying_medium {
   background-color: rgba(168, 144, 240, 0.6);
   color: black;
 }
 
-.ghost_light {
+.ghost_medium {
   background-color: rgba(112, 88, 152, 0.6);
   color: white;
 }
 
-.grass_light {
+.grass_medium {
   background-color: rgba(120, 200, 80, 0.6);
   color: black;
 }
 
-.ground_light {
+.ground_medium {
   background-color: rgba(224, 192, 104, 0.6);
   color: black;
 }
 
-.ice_light {
+.ice_medium {
   background-color: rgba(152, 216, 216, 0.6);
   color: black;
 }
 
-.normal_light {
+.normal_medium {
   background-color: rgba(168, 168, 120, 0.6);
   color: black;
 }
 
-.poison_light {
+.poison_medium {
   background-color: rgba(160, 64, 160, 0.6);
   color: white;
 }
 
-.psychic_light {
+.psychic_medium {
   background-color: rgba(248, 88, 136, 0.6);
   color: white;
 }
 
-.rock_light {
+.rock_medium {
   background-color: rgba(184, 160, 56, 0.6);
   color: white;
 }
 
-.steel_light {
+.steel_medium {
   background-color: rgba(184, 184, 208, 0.6);
   color: black;
 }
 
-.water_light {
+.water_medium {
   background-color: rgba(104, 144, 240, 0.6);
   color: white;
 }
+
+/* Background - Low opacity */
+
+.bug_light {
+  background-color: rgba(168, 184, 32, 0.3);
+  color: black;
+}
+
+.dark_light {
+  background-color: rgba(112, 88, 72, 0.3);
+  color: black;
+}
+
+.dragon_light {
+  background-color: rgba(112, 56, 248, 0.3);
+  color: black;
+}
+
+.electric_light {
+  background-color: rgba(248, 208, 48, 0.3);
+  color: black;
+}
+
+.fairy_light {
+  background-color: rgba(238, 153, 172, 0.3);
+  color: black;
+}
+
+.fighting_light {
+  background-color: rgba(192, 48, 40, 0.3);
+  color: black;
+}
+
+.fire_light {
+  background-color: rgba(240, 128, 48, 0.3);
+  color: black;
+}
+
+.flying_light {
+  background-color: rgba(168, 144, 240, 0.3);
+  color: black;
+}
+
+.ghost_light {
+  background-color: rgba(112, 88, 152, 0.3);
+  color: black;
+}
+
+.grass_light {
+  background-color: rgba(120, 200, 80, 0.3);
+  color: black;
+}
+
+.ground_light {
+  background-color: rgba(224, 192, 104, 0.3);
+  color: black;
+}
+
+.ice_light {
+  background-color: rgba(152, 216, 216, 0.3);
+  color: black;
+}
+
+.normal_light {
+  background-color: rgba(168, 168, 120, 0.3);
+  color: black;
+}
+
+.poison_light {
+  background-color: rgba(160, 64, 160, 0.3);
+  color: black;
+}
+
+.psychic_light {
+  background-color: rgba(248, 88, 136, 0.3);
+  color: black;
+}
+
+.rock_light {
+  background-color: rgba(184, 160, 56, 0.3);
+  color: black;
+}
+
+.steel_light {
+  background-color: rgba(184, 184, 208, 0.3);
+  color: black;
+}
+
+.water_light {
+  background-color: rgba(104, 144, 240, 0.3);
+  color: black;
+}
+
+/* Shadows */
+
+.shadow-normal {
+  box-shadow: 0 0px 24px rgba(160, 160, 160, 0.3);
+}
+
+.shadow-fire {
+  box-shadow: 0 0px 24px rgba(255, 69, 0, 0.3);
+}
+
+.shadow-water {
+  box-shadow: 0 0px 24px rgba(0, 0, 255, 0.3);
+}
+
+.shadow-grass {
+  box-shadow: 0 0px 24px rgba(0, 128, 0, 0.3);
+}
+
+.shadow-electric {
+  box-shadow: 0 0px 24px rgba(255, 255, 0, 0.3);
+}
+
+.shadow-ice {
+  box-shadow: 0 0px 24px rgba(173, 216, 230, 0.3);
+}
+
+.shadow-fighting {
+  box-shadow: 0 0px 24px rgba(139, 0, 0, 0.3);
+}
+
+.shadow-poison {
+  box-shadow: 0 0px 24px rgba(148, 0, 211, 0.3);
+}
+
+.shadow-ground {
+  box-shadow: 0 0px 24px rgba(139, 69, 19, 0.3);
+}
+
+.shadow-flying {
+  box-shadow: 0 0px 24px rgba(0, 0, 0, 0.3);
+}
+
+.shadow-psychic {
+  box-shadow: 0 0px 24px rgba(255, 20, 147, 0.3);
+}
+
+.shadow-bug {
+  box-shadow: 0 0px 24px rgba(128, 128, 0, 0.3);
+}
+
+.shadow-rock {
+  box-shadow: 0 0px 24px rgba(139, 69, 19, 0.3);
+}
+
+.shadow-ghost {
+  box-shadow: 0 0px 24px rgba(128, 0, 128, 0.3);
+}
+
+.shadow-dragon {
+  box-shadow: 0 0px 24px rgba(119, 136, 153, 0.3);
+}
+
+.shadow-dark {
+  box-shadow: 0 0px 24px rgba(0, 0, 0, 0.3);
+}
+
+.shadow-steel {
+  box-shadow: 0 0px 24px rgba(192, 192, 192, 0.3);
+}
+
+.shadow-fairy {
+  box-shadow: 0 0px 24px rgba(255, 182, 193, 0.3);
+}
+

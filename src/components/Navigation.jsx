@@ -26,18 +26,18 @@ function Navigation() {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-0">
-            <li className="nav-item">
+            <li className="nav-item d-flex align-items-center ms-1 ms-lg-0">
               <Link to="/" className="nav-link">
                 List
               </Link>
             </li>
-            <li className="nav-item">
+            <li className="nav-item d-flex align-items-center ms-1 ms-lg-0">
               <Link to="/pokedex" className="nav-link">
                 Pokedex
               </Link>
             </li>
             <li className="nav-item">
-            <div className="input-group">
+            <div className="input-group py-lg-0 py-2">
               <input type="text" className="form-control" placeholder="Search Pokémon" aria-label="Search Pokémon" aria-describedby="button-addon2" />
               <button className="btn btn-outline-secondary" type="button" id="button-addon2">🔎</button>
             </div>
