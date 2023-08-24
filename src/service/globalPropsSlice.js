@@ -12,13 +12,18 @@ const globalPropsSlice = createSlice({
     setSearch: (state, action) => {
       state.search = action.payload;
     },
-    setTeam: (state, action) => {
-      state.search = action.payload;
+    togglePokemonInTeam: (state, action) => {
+      const url = action.payload;
+      if (state.team.includes(url)) {
+        state.team = state.team.filter(pokemonUrl => pokemonUrl !== url);
+      } else {
+        state.team.push(url);
+      }
     },
   },
 });
 
-export const { setSearch, setTeam } =
+export const { setSearch, togglePokemonInTeam } =
   globalPropsSlice.actions;
 
 export default globalPropsSlice.reducer;

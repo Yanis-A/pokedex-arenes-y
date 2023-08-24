@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { fetchPokemons } from "../service/service";
 import Error from "../components/Error";
 import Card from "../components/Card";
+import PropTypes from "prop-types";
 
-function PokemonList() {
+function PokemonList({ teamArray }) {
   const [pokemons, setPokemons] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -13,9 +14,14 @@ function PokemonList() {
       try {
         setLoading(true);
         setError(null);
-        const data = await fetchPokemons();
-        setPokemons(data.results);
-        setLoading(false);
+        if (teamArray) {
+          setPokemons(teamArray);
+        } else {
+          const data = await fetchPokemons();
+          // console.log(data.results);
+          setPokemons(data.results);
+          setLoading(false);
+        }
       } catch (error) {
         setError(error);
         console.error("Error fetching pokemons: ", error);
@@ -23,7 +29,7 @@ function PokemonList() {
       }
     };
     fetchPokemonsData();
-  }, []);
+  }, [teamArray]);
 
   if (loading) {
     return (
@@ -49,5 +55,9 @@ function PokemonList() {
     </div>
   );
 }
+
+PokemonList.propTypes = {
+  teamArray: PropTypes.array,
+};
 
 export default PokemonList;

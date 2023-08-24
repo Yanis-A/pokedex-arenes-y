@@ -1,18 +1,25 @@
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { togglePokemonInTeam } from "../service/globalPropsSlice";
 import { fetchPokemonByUrl } from "../service/service";
 import { Link } from "react-router-dom";
 import Error from "../components/Error";
-import styles from "../styles/typeColors.module.css";
+// import styles from "../styles/typeColors.module.css";
 
 import PokeballSmall from "../assets/pokeball.png";
 
 function Card({ url }) {
+  console.log(url)
   const [pokemon, setPokemon] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const { team } = useSelector(
+    (state) => state.globalProps
+  );
 
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchPokemonData = async () => {
@@ -39,9 +46,13 @@ function Card({ url }) {
 
   const Name = pokemon && pokemon.name !== null ? capitalizeFirstLetter(pokemon.name) : "???";
 
-  function test() {
-    console.log('favori', Name);
-  }
+  const Id = pokemon && pokemon.id;
+
+  const handleToggleTeam = () => {
+    dispatch(togglePokemonInTeam(url));
+  };
+
+  const isPokemonInTeam = team.includes(url);
 
   if (error) {
     return <Error err={error.message} />
@@ -49,11 +60,11 @@ function Card({ url }) {
 
   return (
     (!loading && <div className="card" style={{ width: "10rem" }}>
-      <button type="button" onClick={test} className="btn position-absolute top-0 end-0 p-2 bg-secondary bg-opacity-50">➕</button>
       <img src={Image} className="card-img-top" alt={Name} />
       <div className="card-body text-center">
+        <small>#{Id}</small>
         <h5 className="card-title fw-bold">{Name}</h5>
-        <p className="card-text">
+        {/* <p className="card-text">
           {pokemon && pokemon.types.map((type) => (
                 <span
                   key={type.type.name}
@@ -62,12 +73,12 @@ function Card({ url }) {
                   {type.type.name}
                 </span>
               ))}
-        </p>
+        </p> */}
         <div className="d-flex">
           <Link className="btn btn-outline-warning flex-grow-1">
             Details
           </Link>
-          <button type="button" onClick={test} className="btn btn-outline-secondary ms-1 flex-grow-0">➕</button>
+          <button type="button" title={!isPokemonInTeam ? "Add to team" : "Remove from team"} onClick={handleToggleTeam} className="btn btn-outline-secondary ms-1 flex-grow-0">{!isPokemonInTeam ? "➕" : "✔️"}</button>
         </div>
       </div>
     </div>)

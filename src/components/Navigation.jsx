@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/logoV2.png";
+import { useSelector } from "react-redux";
 
 function Navigation() {
+  const { team } = useSelector(
+    (state) => state.globalProps
+  );
+
   return (
     <nav className="navbar navbar-expand-lg sticky-top bg-body-tertiary">
       <div className="container-fluid">
@@ -43,7 +48,7 @@ function Navigation() {
             <li className="nav-item">
               <Link to="/pokedex" className="nav-link">
                 <button type="button" title="See in Pokedex" className="btn" style={{backgroundColor: "#ff0000", color: "#ffffff"}}>
-                My Team : X Pokémons
+                  My Team : {team.length} Pokémon{team.length !== 1 ? "s" : ""}
                 </button>
               </Link>
             </li>
