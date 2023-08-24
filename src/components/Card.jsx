@@ -1,19 +1,13 @@
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { togglePokemonInTeam } from "../service/globalPropsSlice";
-import { fetchPokemonByUrl } from "../service/service";
 import { Link } from "react-router-dom";
-import Error from "../components/Error";
 // import styles from "../styles/typeColors.module.css";
 
-import PokeballSmall from "../assets/pokeball.png";
+// import PokeballSmall from "../assets/pokeball.png";
 
-function Card({ url }) {
-  console.log(url)
-  const [pokemon, setPokemon] = useState();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+function Card({ id, name }) {
+  // console.log(id, name)
 
   const { team } = useSelector(
     (state) => state.globalProps
@@ -21,48 +15,26 @@ function Card({ url }) {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const fetchPokemonData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const data = await fetchPokemonByUrl(url);
-        setPokemon(data);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        console.error("Error fetching pokemon: ", error);
-        setLoading(false);
-      }
-    };
-    fetchPokemonData();
-  }, [url]);
-
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   }
 
-  const Image = pokemon ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png` : PokeballSmall;
+  const Image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
 
-  const Name = pokemon && pokemon.name !== null ? capitalizeFirstLetter(pokemon.name) : "???";
-
-  const Id = pokemon && pokemon.id;
+  const Name = name ? capitalizeFirstLetter(name) : "???";
 
   const handleToggleTeam = () => {
-    dispatch(togglePokemonInTeam(url));
+    dispatch(togglePokemonInTeam({id, name}));
   };
 
-  const isPokemonInTeam = team.includes(url);
-
-  if (error) {
-    return <Error err={error.message} />
-  }
+  // const isPokemonInTeam = team.includes(id);
+  const isPokemonInTeam = team.some((pokemon) => pokemon.id === id);
 
   return (
-    (!loading && <div className="card" style={{ width: "10rem" }}>
+    <div className="card" style={{ width: "10rem" }}>
       <img src={Image} className="card-img-top" alt={Name} />
       <div className="card-body text-center">
-        <small>#{Id}</small>
+        <small>#{id}</small>
         <h5 className="card-title fw-bold">{Name}</h5>
         {/* <p className="card-text">
           {pokemon && pokemon.types.map((type) => (
@@ -81,12 +53,13 @@ function Card({ url }) {
           <button type="button" title={!isPokemonInTeam ? "Add to team" : "Remove from team"} onClick={handleToggleTeam} className="btn btn-outline-secondary ms-1 flex-grow-0">{!isPokemonInTeam ? "➕" : "✔️"}</button>
         </div>
       </div>
-    </div>)
+    </div>
   );
 }
 
 Card.propTypes = {
-  url: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired
 };
 
 export default Card;

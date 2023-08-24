@@ -13,13 +13,14 @@ const globalPropsSlice = createSlice({
       state.search = action.payload;
     },
     togglePokemonInTeam: (state, action) => {
-      const url = action.payload;
-      if (state.team.includes(url)) {
-        state.team = state.team.filter(pokemonUrl => pokemonUrl !== url);
+      const { id, name } = action.payload;
+      const existingIndex = state.team.findIndex(pokemon => pokemon.id === id);
+      if (existingIndex !== -1) {
+        state.team.splice(existingIndex, 1);
       } else {
-        state.team.push(url);
+        state.team.push({ id, name });
       }
-    },
+    }, 
   },
 });
 

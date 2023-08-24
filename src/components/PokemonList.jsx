@@ -16,9 +16,10 @@ function PokemonList({ teamArray }) {
         setError(null);
         if (teamArray) {
           setPokemons(teamArray);
+          setLoading(false);
         } else {
           const data = await fetchPokemons();
-          // console.log(data.results);
+          console.log(data.results);
           setPokemons(data.results);
           setLoading(false);
         }
@@ -30,6 +31,12 @@ function PokemonList({ teamArray }) {
     };
     fetchPokemonsData();
   }, [teamArray]);
+
+  function getIdFromUrl(url) {
+    const urlParts = url.split("/");
+    const idStr = urlParts.slice(-2, -1)[0];
+    return +idStr;
+  }
 
   if (loading) {
     return (
@@ -46,11 +53,13 @@ function PokemonList({ teamArray }) {
   return (
     <div className="container-fluid">
       <div className="row">
-        {pokemons.map((pokemon, index) => (
-          <div key={index} className="col m-1 p-0 d-flex flex-wrap justify-content-center">
-            <Card url={pokemon.url} />
-          </div>
-        ))}
+        {(pokemons.map((pokemon) => {
+          const id = teamArray ? pokemon.id : getIdFromUrl(pokemon.url);
+          const name = pokemon.name;
+          return(<div key={id} className="col m-1 p-0 d-flex flex-wrap justify-content-center">
+            <Card id={id} name={name} />
+          </div>)
+        }))}
       </div>
     </div>
   );
