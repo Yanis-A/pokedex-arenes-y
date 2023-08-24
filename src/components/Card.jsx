@@ -3,6 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { togglePokemonInTeam } from "../service/globalPropsSlice";
 import { Link } from "react-router-dom";
 import { capitalizeFirstLetter } from "../service/utils";
+import styles from "../styles/typeColors.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faMinus,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 
 // import PokeballSmall from "../assets/pokeball.png";
 
@@ -26,26 +32,27 @@ function Card({ id, name }) {
   const isPokemonInTeam = team.some((pokemon) => pokemon.id === id);
 
   return (
-    <div className={"card shadow-sm " + (isPokemonInTeam ? "border border-2 border-warning" : "")} style={{ width: "10rem" }}>
+    <div className={"card shadow-sm position-relative d-flex flex-column align-items-center justify-content-center" + (isPokemonInTeam ? "border border-2 border-warning" : "")} style={{ width: "10rem" }}>
       <img src={Image} className="card-img-top" alt={Name} />
+      {isPokemonInTeam && (  
+        <div className="position-absolute top-0 end-0 m-1">
+          <span
+                className={
+                  "badge m-1 rounded-pill fw-normal " + styles.pokeball_red_bg
+                }
+              >
+                In your team!
+              </span>
+        </div>
+      )}
       <div className="card-body text-center">
         <small>#{id}</small>
         <h5 className="card-title fw-bold">{Name}</h5>
-        {/* <p className="card-text">
-          {pokemon && pokemon.types.map((type) => (
-                <span
-                  key={type.type.name}
-                  className={"badge m-1 py-1 rounded-pill " + styles[type.type.name]}
-                >
-                  {type.type.name}
-                </span>
-              ))}
-        </p> */}
         <div className="d-flex">
           <Link to={`/pokemon/${id}`} className="btn btn-outline-warning flex-grow-1">
             Details
           </Link>
-          <button type="button" title={!isPokemonInTeam ? "Add to team" : "Remove from team"} onClick={handleToggleTeam} className="btn btn-outline-secondary ms-1 flex-grow-0">{!isPokemonInTeam ? "➕" : "✔️"}</button>
+          <button type="button" title={!isPokemonInTeam ? "Add to team" : "Remove from team"} onClick={handleToggleTeam} className="btn btn-outline-light ms-1 flex-grow-0 text-dark">{!isPokemonInTeam ? <FontAwesomeIcon icon={faPlus} /> : <FontAwesomeIcon icon={faMinus} />}</button>
         </div>
       </div>
     </div>

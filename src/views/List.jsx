@@ -1,5 +1,6 @@
 import PokemonList from "../components/PokemonList";
 import Logo from "../assets/logoV2.png";
+import styles from "../styles/typeColors.module.css";
 
 function List() {
   // Welcome the user
@@ -19,10 +20,10 @@ function List() {
 
   return (
     <div className="container-fluid">
-      <div className="d-flex flex-column align-items-center my-3">
+      <div className="d-flex flex-column align-items-center my-3 fs-5">
         <img width={300} src={Logo} alt="ReactDex Logo" />
-        <p>Welcome <span style={{color: "#ff0000"}} className="fw-bold">{adjectives[randomIndex]}</span> trainer! 👋</p>
-        <h1 className="mb-4">Find Pokémons</h1>
+        <p>Welcome <span className={"fw-bold " + styles.pokeball_red}>{adjectives[randomIndex]}</span> trainer! 👋</p>
+        <p className="fs-2 mb-4">Set up your team!</p>
         <PokemonList />
       </div>
     </div>

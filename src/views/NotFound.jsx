@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import styles from '../styles/typeColors.module.css'
 
 function NotFound() {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ return (
         <p>Redirecting to the home page...</p>
       )}
       {!countdown && <Link to="/">
-        <button className="btn" title="Take me back!" style={{backgroundColor: "#ff0000", color: "#ffffff"}}>Back to home page</button>
+        <button className={"btn" + styles.pokeball_red_bg} title="Take me back!">Back to home page</button>
       </Link>}
     </div>
   </div>

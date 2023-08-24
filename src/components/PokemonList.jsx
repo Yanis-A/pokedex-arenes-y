@@ -51,12 +51,12 @@ function PokemonList({ teamArray }) {
   }
 
   return (
-    <div className="container-fluid">
-      <div className="row">
+    <div className="container-fluid m-auto">
+      <div className="d-flex flex-row flex-wrap align-items-center justify-content-center">
         {(pokemons.map((pokemon) => {
           const id = teamArray ? pokemon.id : getIdFromUrl(pokemon.url);
           const name = pokemon.name;
-          return(<div key={id} className="col m-1 p-0 d-flex flex-wrap justify-content-center">
+          return(<div key={id} className="m-1">
             <Card id={id} name={name} />
           </div>)
         }))}

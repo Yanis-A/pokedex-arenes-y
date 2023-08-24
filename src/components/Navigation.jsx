@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/logoV2.png";
 import { useSelector } from "react-redux";
+import styles from "../styles/typeColors.module.css";
 
 function Navigation() {
   const { team } = useSelector(
@@ -47,7 +48,7 @@ function Navigation() {
           <ul className="navbar-nav ml-auto my-0 mb-2 mb-lg-0">
             <li className="nav-item">
               <Link to="/pokedex" className="nav-link">
-                <button type="button" title="See in Pokedex" className="btn" style={{backgroundColor: "#ff0000", color: "#ffffff"}}>
+                <button type="button" title="See in Pokedex" className={"btn text-white " + styles.pokeball_red_bg}>
                   My Team : {team.length} Pokémon{team.length !== 1 ? "s" : ""}
                 </button>
               </Link>

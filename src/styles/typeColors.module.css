@@ -1,3 +1,12 @@
+/* Pokeball red */
+.pokeball_red {
+  color: #FF3C00 !important;
+}
+
+.pokeball_red_bg {
+  background-color: #FF3C00 !important;
+}
+
 /* Text color */
 .bug_txt {
   color: #a8b820;
