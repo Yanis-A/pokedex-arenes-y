@@ -13,7 +13,6 @@ import {
 // import PokeballSmall from "../assets/pokeball.png";
 
 function Card({ id, name }) {
-  // console.log(id, name)
 
   const { team } = useSelector(
     (state) => state.globalProps

@@ -1,0 +1,7 @@
+@media (min-width: 992px) {
+  .max_height_lg {
+    max-height: 90vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  };
+};

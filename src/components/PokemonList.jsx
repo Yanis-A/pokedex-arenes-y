@@ -19,7 +19,6 @@ function PokemonList({ teamArray }) {
           setLoading(false);
         } else {
           const data = await fetchPokemons();
-          console.log(data.results);
           setPokemons(data.results);
           setLoading(false);
         }

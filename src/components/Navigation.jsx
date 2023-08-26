@@ -9,7 +9,7 @@ function Navigation() {
   );
 
   return (
-    <nav className="navbar navbar-expand-lg sticky-top bg-body-tertiary">
+    <nav className="navbar navbar-expand-lg sticky-top bg-body-tertiary shadow">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
           <img width={150} src={logo} alt="ReactDex Logo" />
