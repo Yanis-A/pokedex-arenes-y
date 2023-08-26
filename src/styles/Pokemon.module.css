@@ -1,7 +1,16 @@
+
 @media (min-width: 992px) {
   .max_height_lg {
     max-height: 90vh;
     overflow-y: auto;
     scrollbar-width: thin;
   };
+  
+  .responsive_w_50 {
+    width: 50%;
+  };
+};
+
+.responsive_w_50 {
+  width: 100%;
 };

@@ -154,7 +154,7 @@ function Pokemon() {
           </button>
         </Link>
       )}
-      <div className="py-3 py-lg-0 d-flex flex-grow-1 flex-column align-items-center justify-content-center text-center">
+      <div className={"py-3 py-lg-0 d-flex flex-grow-1 flex-column align-items-center justify-content-center text-center " + stylesPokemon.responsive_w_50}>
         <h2 className="fw-lighter">#{id}</h2>
         <h1 className="fw-bold">{Name}</h1>
         <div style={{ maxWidth: "300px" }} className="position-relative my-3">
@@ -202,7 +202,7 @@ function Pokemon() {
       <div
         className={
           "d-flex flex-grow-1 flex-column align-items-center text-center " +
-          stylesPokemon.max_height_lg
+          stylesPokemon.max_height_lg + " " + stylesPokemon.responsive_w_50
         }
       >
         <p className="fs-5 mb-1 mt-3 fw-bold">Main specs</p>
@@ -242,9 +242,9 @@ function Pokemon() {
         </p>
         <div className="d-flex flex-row align-items center justify-content-center mb-1">
           {Abilities &&
-            Abilities.map((ability) => (
+            Abilities.map((ability, index) => (
               <span
-                key={ability.ability.name}
+                key={index}
                 className={
                   "badge fw-normal fs-6 m-1 py-1 rounded-pill text-black " +
                   styles[`${FirstType}_light`]
