@@ -20,6 +20,7 @@ const globalPropsSlice = createSlice({
       } else {
         state.team.push({ id, name });
       }
+      localStorage.setItem("team", JSON.stringify(state.team));
     }, 
   },
 });

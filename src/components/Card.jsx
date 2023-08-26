@@ -13,7 +13,6 @@ import {
 // import PokeballSmall from "../assets/pokeball.png";
 
 function Card({ id, name }) {
-
   const { team } = useSelector(
     (state) => state.globalProps
   );
@@ -34,11 +33,12 @@ function Card({ id, name }) {
     <div className={"card shadow-sm position-relative d-flex flex-column align-items-center justify-content-center" + (isPokemonInTeam ? "border border-2 border-warning" : "")} style={{ width: "10rem" }}>
       <img src={Image} className="card-img-top" alt={Name} />
       {isPokemonInTeam && (  
-        <div className="position-absolute top-0 end-0 m-1">
+        <div className="position-absolute top-0 end-0 d-flex align-itmens-center m-1">
           <span
                 className={
-                  "badge m-1 rounded-pill fw-normal " + styles.pokeball_red_bg
+                  "badge rounded-pill fw-normal " + styles.pokeball_red_bg
                 }
+                style={{ fontSize: "0.8rem"}}
               >
                 In your team!
               </span>

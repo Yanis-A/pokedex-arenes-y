@@ -1,12 +1,24 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/logoV2.png";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "../styles/typeColors.module.css";
+import { setSearch } from "../service/globalPropsSlice";
+import { useEffect } from "react";
 
 function Navigation() {
-  const { team } = useSelector(
-    (state) => state.globalProps
-  );
+  const { team, search } = useSelector((state) => state.globalProps);
+
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  useEffect(() => {
+    dispatch(setSearch(""));
+  }, [location.pathname, dispatch]);
+
+  const handleSearchChange = (event) => {
+    const value = event.target.value;
+    dispatch(setSearch(value));
+  };
 
   return (
     <nav className="navbar navbar-expand-lg sticky-top bg-body-tertiary shadow">
@@ -38,17 +50,26 @@ function Navigation() {
               </Link>
             </li>
             <li className="nav-item">
-            <div className="input-group py-lg-0 py-2">
-              <input type="text" className="form-control" placeholder="Search Pokémon" aria-label="Search Pokémon" aria-describedby="button-addon2" />
-              <button className="btn btn-outline-secondary" type="button" id="button-addon2">🔎</button>
-            </div>
-
+              <div className="input-group py-lg-0 py-2">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search Pokémon by name"
+                  aria-label="Search Pokémon by name"
+                  value={search || ""}
+                  onChange={handleSearchChange}
+                />
+              </div>
             </li>
           </ul>
           <ul className="navbar-nav ml-auto my-0 mb-2 mb-lg-0">
             <li className="nav-item">
               <Link to="/pokedex" className="nav-link">
-                <button type="button" title="See in Pokedex" className={"btn text-white " + styles.pokeball_red_bg}>
+                <button
+                  type="button"
+                  title="See in Pokedex"
+                  className={"btn text-white " + styles.pokeball_red_bg}
+                >
                   My Team : {team.length} Pokémon{team.length !== 1 ? "s" : ""}
                 </button>
               </Link>

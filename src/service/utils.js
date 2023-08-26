@@ -100,7 +100,8 @@ export const getEnglishFlavorText = (flavorTexts) => {
     (entry) => entry.language.name === "en"
   );
   if (englishEntries.length > 0) {
-    return englishEntries[0].flavor_text;
+    // eslint-disable-next-line no-control-regex
+    return englishEntries[0].flavor_text.replace(/[\u000c\n]/g, " ");
   } else {
     return null;
   }
