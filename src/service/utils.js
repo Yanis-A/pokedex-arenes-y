@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 // Capitzalize string
 export function capitalizeFirstLetter(string) {
   if (typeof string !== "string" || string.length === 0) {
@@ -105,4 +107,23 @@ export const getEnglishFlavorText = (flavorTexts) => {
   } else {
     return null;
   }
+}
+
+// Redirection countdown function
+export function useCountdown(initialCountdown, interval) {
+  const [countdown, setCountdown] = useState(initialCountdown);
+
+  useEffect(() => {
+    if (countdown > 0) {
+      const timer = setInterval(() => {
+        setCountdown((prevCountdown) => prevCountdown - 1);
+      }, interval);
+
+      return () => {
+        clearInterval(timer);
+      };
+    }
+  }, [countdown, interval]);
+
+  return countdown;
 }

@@ -1,31 +1,37 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
+// Modules
+import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+// Components
+import Error from "../components/Error";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import StatBar from "../components/StatBar";
+
+// Functions
 import {
   fetchPokemonById,
   fetchPokemonSpeciesById,
   fetchPokemonEvolutionChain,
 } from "../service/service";
-import { useState, useEffect } from "react";
-import Error from "../components/Error";
 import {
   capitalizeFirstLetter,
   getEmojiForType,
   getEnglishFlavorText,
 } from "../service/utils";
-import styles from "../styles/typeColors.module.css";
-import { useSelector, useDispatch } from "react-redux";
 import { togglePokemonInTeam } from "../service/globalPropsSlice";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChevronLeft,
-  faChevronRight,
-  faMinus,
-  faPlus,
-  faArrowRight,
-} from "@fortawesome/free-solid-svg-icons";
-import StatBar from "../components/StatBar";
 import { getColorForType } from "../service/utils";
+
+// Styling
+import styles from "../styles/typeColors.module.css";
 import stylesPokemon from "../styles/pokemon.module.css";
+
+// Constants
 import { STORAGE_NAME } from "../service/localStorage";
+import PokemonNavigation from "../components/PokemonNavigation";
+import PokemonEvolutions from "../components/PokemonEvolutions";
+import PokemonSpeciesItem from "../components/PokemonSpeciesItem";
 
 function Pokemon() {
   const { team } = useSelector((state) => state.globalProps);
@@ -102,6 +108,36 @@ function Pokemon() {
       value: stat.base_stat,
     }));
   const FlavorTexts = pokemonSpecies && pokemonSpecies.flavor_text_entries;
+  const speciesSpecsArray = [
+    {
+      keyPath: "habitat",
+      isNumber: false,
+    },
+    {
+      keyPath: "generation",
+      isNumber: false,
+    },
+    {
+      keyPath: "color",
+      isNumber: false,
+    },
+    {
+      keyPath: "shape",
+      isNumber: false,
+    },
+    {
+      keyPath: "growth_rate",
+      isNumber: false,
+    },
+    {
+      keyPath: "hatch_counter",
+      isNumber: true,
+    },
+    {
+      keyPath: "capture_rate",
+      isNumber: true,
+    },
+  ];
 
   // Pokedex handling
   const handleToggleTeam = () => {
@@ -115,14 +151,6 @@ function Pokemon() {
   };
 
   const isPokemonInTeam = team.some((pokemon) => pokemon.id === id);
-
-  function isEvolutionName(name, evolutionName) {
-    if (name === evolutionName) {
-      return "text-black";
-    } else {
-      return "text-secondary";
-    }
-  }
 
   //Rendered while loading or in case of error
   if (loading) {
@@ -147,28 +175,8 @@ function Pokemon() {
         backgroundColor: getColorForType(Types ? LastType : "", 0.1),
       }}
     >
-      {id > MinPokemon && (
-        <Link
-          to={`/pokemon/${id - 1}`}
-          className="position-fixed top-50 start-0 translate-middle-y m-3"
-          style={{ zIndex: 1000 }}
-        >
-          <button className="btn btn-outline-dark" title="Previous Pokémon">
-            <FontAwesomeIcon icon={faChevronLeft} />
-          </button>
-        </Link>
-      )}
-      {id < MaxPokemon && (
-        <Link
-          to={`/pokemon/${id + 1}`}
-          className="position-fixed top-50 end-0 translate-middle-y m-3"
-          style={{ zIndex: 1000 }}
-        >
-          <button className="btn btn-outline-dark" title="Next Pokémon">
-            <FontAwesomeIcon icon={faChevronRight} />
-          </button>
-        </Link>
-      )}
+      {/* Navigation through available pokemons */}
+      <PokemonNavigation id={id} min={MinPokemon} max={MaxPokemon} />
       <div
         className={
           "py-3 py-lg-0 d-flex flex-grow-1 flex-column align-items-center justify-content-center text-center " +
@@ -227,7 +235,7 @@ function Pokemon() {
           stylesPokemon.responsive_w_50
         }
       >
-        <p className="fs-5 mb-1 mt-3 fw-bold">Main specs</p>
+        <p className="fs-4 mb-1 mt-3 fw-bold">Main specs</p>
         <p className="fs-5 mb-1 fw-semibold">
           {Types && Types.length > 1 ? "Types" : "Type"}
         </p>
@@ -247,7 +255,6 @@ function Pokemon() {
               </span>
             ))}
         </div>
-        {/* <hr style={{width: "300px"}} className="border border-secondary border-1 opacity-50" /> */}
         <div className="d-flex flex-row justify-content-center align-items-center mb-1">
           <div className="mx-3">
             <p className="fs-5 mb-1 fw-semibold">Height</p>
@@ -258,7 +265,6 @@ function Pokemon() {
             <p className="fs-6 mb-1">{Weight}</p>
           </div>
         </div>
-        {/* <hr style={{width: "300px"}} className="border border-secondary border-1 opacity-50" /> */}
         <p className="fs-5 mb-1 fw-semibold">
           {Abilities && Abilities.length > 1 ? "Abilities" : "Ability"}
         </p>
@@ -284,9 +290,9 @@ function Pokemon() {
         )}
         <hr
           style={{ width: "300px" }}
-          className="border border-secondary border-1 opacity-50"
+          className="border border-secondary border-1 opacity-50 m-1"
         />
-        {BaseStats && <p className="fs-5 mb-1 fw-bold">Base stats</p>}
+        {BaseStats && <p className="fs-4 mb-1 fw-bold">Base stats</p>}
         {BaseStatsMap &&
           BaseStatsMap.map((stat) => (
             <StatBar
@@ -319,66 +325,23 @@ function Pokemon() {
         </div>
         <hr
           style={{ width: "300px" }}
-          className="border border-secondary border-1 opacity-50"
+          className="border border-secondary border-1 opacity-50 m-1"
         />
         <div
           className="d-flex flex-column justify-content-center align-items-center mb-1"
           style={{ maxWidth: "300px" }}
         >
-          <p className="fs-5 mb-1 fw-bold">Species specs</p>
+          <p className="fs-4 mb-1 fw-bold">Species specs</p>
           <div className="d-flex flex-row flex-wrap justify-content-center align-items-center mb-1">
-            {pokemonSpecies && pokemonSpecies.habitat && (
-              <div className="mx-3">
-                <p className="fs-5 mb-1 fw-semibold">Habitat</p>
-                <p className="fs-6 mb-1">
-                  {capitalizeFirstLetter(pokemonSpecies.habitat.name)}
-                </p>
-              </div>
-            )}
-            {pokemonSpecies && pokemonSpecies.generation && (
-              <div className="mx-3">
-                <p className="fs-5 mb-1 fw-semibold">Generation</p>
-                <p className="fs-6 mb-1">
-                  {capitalizeFirstLetter(pokemonSpecies.generation.name)}
-                </p>
-              </div>
-            )}
-            {pokemonSpecies && pokemonSpecies.color && (
-              <div className="mx-3">
-                <p className="fs-5 mb-1 fw-semibold">Color</p>
-                <p className="fs-6 mb-1">
-                  {capitalizeFirstLetter(pokemonSpecies.color.name)}
-                </p>
-              </div>
-            )}
-            {pokemonSpecies && pokemonSpecies.shape && (
-              <div className="mx-3">
-                <p className="fs-5 mb-1 fw-semibold">Shape</p>
-                <p className="fs-6 mb-1">
-                  {capitalizeFirstLetter(pokemonSpecies.shape.name)}
-                </p>
-              </div>
-            )}
-            {pokemonSpecies && pokemonSpecies.growth_rate && (
-              <div className="mx-3">
-                <p className="fs-5 mb-1 fw-semibold">Growth rate</p>
-                <p className="fs-6 mb-1">
-                  {capitalizeFirstLetter(pokemonSpecies.growth_rate.name)}
-                </p>
-              </div>
-            )}
-            {pokemonSpecies && pokemonSpecies.hatch_counter && (
-              <div className="mx-3">
-                <p className="fs-5 mb-1 fw-semibold">Hatch counter</p>
-                <p className="fs-6 mb-1">{pokemonSpecies.hatch_counter}</p>
-              </div>
-            )}
-            {pokemonSpecies && pokemonSpecies.capture_rate && (
-              <div className="mx-3">
-                <p className="fs-5 mb-1 fw-semibold">Capture rate</p>
-                <p className="fs-6 mb-1">{pokemonSpecies.capture_rate}</p>
-              </div>
-            )}
+            {speciesSpecsArray.map((spec) => (
+              <PokemonSpeciesItem
+                key={spec.keyPath}
+                species={pokemonSpecies}
+                keyPath={spec.keyPath}
+                isNumber={spec.isNumber}
+                capitalize={capitalizeFirstLetter}
+              />
+            ))}
             {pokemonSpecies && pokemonSpecies.egg_group && (
               <div className="mx-3">
                 <p className="fs-5 mb-1 fw-semibold">Egg groups</p>
@@ -401,101 +364,14 @@ function Pokemon() {
         </div>
         <hr
           style={{ width: "300px" }}
-          className="border border-secondary border-1 opacity-50"
+          className="border border-secondary border-1 opacity-50 m-1"
         />
-        <div className="d-flex flex-column flex-wrap justify-content-center align-items-center mb-3">
-          {pokemonSpecies && evolutionChain && (
-            <p className="fs-5 mb-1 fw-bold">Evolution chain</p>
-          )}
-          {pokemonSpecies &&
-          evolutionChain &&
-          evolutionChain?.chain?.evolves_to.length === 0 ? (
-            <p className="fs-6 mb-1">
-              This Pokémon doesn&apos;t have an evolution chain!
-            </p>
-          ) : (
-            <div className="d-flex flex-row justify-content-center align-items-center mb-1">
-              {pokemonSpecies &&
-                evolutionChain &&
-                evolutionChain?.chain?.species?.name && (
-                  <div className="mx-3">
-                    <p
-                      className={
-                        "fs-6 mb-1 " +
-                        isEvolutionName(
-                          Name,
-                          capitalizeFirstLetter(
-                            evolutionChain?.chain?.species?.name
-                          )
-                        )
-                      }
-                    >
-                      {capitalizeFirstLetter(
-                        evolutionChain?.chain?.species?.name
-                      )}
-                    </p>
-                  </div>
-                )}
-              {pokemonSpecies &&
-                evolutionChain &&
-                evolutionChain?.chain?.species?.name && (
-                  <FontAwesomeIcon icon={faArrowRight} />
-                )}
-              {pokemonSpecies && evolutionChain && (
-                <>
-                  <div className="mx-3">
-                    <p
-                      className={
-                        "fs-6 mb-1 " +
-                        isEvolutionName(
-                          Name,
-                          capitalizeFirstLetter(
-                            evolutionChain?.chain?.evolves_to?.[0]?.species
-                              ?.name
-                          )
-                        )
-                      }
-                    >
-                      {capitalizeFirstLetter(
-                        evolutionChain?.chain?.evolves_to?.[0]?.species?.name
-                      )}
-                    </p>
-                  </div>
-                </>
-              )}
-              {pokemonSpecies &&
-                evolutionChain &&
-                evolutionChain?.chain?.evolves_to?.[0]?.evolves_to?.[0]?.species
-                  ?.name && <FontAwesomeIcon icon={faArrowRight} />}
-              {pokemonSpecies &&
-                evolutionChain &&
-                evolutionChain?.chain?.evolves_to?.[0]?.evolves_to?.[0]?.species
-                  ?.name && (
-                  <>
-                    <div className="mx-3">
-                      <p
-                        className={
-                          "fs-6 mb-1 " +
-                          isEvolutionName(
-                            Name,
-                            capitalizeFirstLetter(
-                              evolutionChain?.chain?.evolves_to?.[0]
-                                ?.evolves_to?.[0]?.species?.name
-                            )
-                          )
-                        }
-                      >
-                        {capitalizeFirstLetter(
-                          evolutionChain?.chain?.evolves_to?.[0]
-                            ?.evolves_to?.[0]?.species?.name
-                        )}
-                      </p>
-                    </div>
-                  </>
-                )}
-            </div>
-          )}
-        </div>
+        <PokemonEvolutions
+          species={pokemonSpecies}
+          chain={evolutionChain}
+          name={Name}
+          capitalize={capitalizeFirstLetter}
+        />
       </div>
     </div>
   );

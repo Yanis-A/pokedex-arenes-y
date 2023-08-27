@@ -1,21 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from '../styles/typeColors.module.css'
 import not_found from '../assets/not_found.gif';
+import { useCountdown } from '../service/utils';
 
 function NotFound() {
   const navigate = useNavigate();
-  const [countdown, setCountdown] = useState(6);
+  const countdown = useCountdown(6, 1000);
 
   useEffect(() => {
-    if (countdown > 0) {
-      const interval = setInterval(() => {
-        setCountdown((prevCountdown) => prevCountdown - 1);
-      }, 1000);
-      return () => {
-        clearInterval(interval);
-      };
-    } else {
+    if (countdown === 0) {
       navigate("/");
     }
   }, [countdown, navigate]);
