@@ -3,7 +3,7 @@ import Logo from "../assets/logoV2.png";
 import styles from "../styles/typeColors.module.css";
 
 function List() {
-  // Welcome the user
+  // Greet the user with a random adjective
   const adjectives = [
     'skilled',
     'dedicated',

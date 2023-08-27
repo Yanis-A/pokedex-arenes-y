@@ -1,5 +1,6 @@
 import PokemonList from "../components/PokemonList";
 import { useSelector } from "react-redux";
+import pokedex_empty from "../assets/pokedex_empty.gif";
 
 function Pokedex() {
   const { team } = useSelector(
@@ -14,7 +15,7 @@ function Pokedex() {
         {team.length > 0 ? <PokemonList teamArray={team} /> :
         (
           <>
-            <img src="https://thumbs.gfycat.com/EachWellinformedAidi-size_restricted.gif" alt="Empty PokeBall" className="rounded" />
+            <img src={pokedex_empty} alt="Empty PokeBall" className="rounded" />
             <p className="fs-3">You don&apos;t have any Pokémon in your team yet!</p>
           </>
         )}

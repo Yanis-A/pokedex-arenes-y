@@ -25,6 +25,7 @@ import {
 import StatBar from "../components/StatBar";
 import { getColorForType } from "../service/utils";
 import stylesPokemon from "../styles/pokemon.module.css";
+import { STORAGE_NAME } from "../service/localStorage";
 
 function Pokemon() {
   const { team } = useSelector((state) => state.globalProps);
@@ -38,15 +39,12 @@ function Pokemon() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const { id } = useParams();
+  let { id } = useParams();
+  // Make id a number back
+  id = +id;
 
-  if (id < 1 || id > 1010) {
-    navigate("/nopokemon");
-  }
-
-  if (isNaN(id)) {
-    navigate("/notfound");
-  }
+  const MinPokemon = 1;
+  const MaxPokemon = 1010;
 
   useEffect(() => {
     const fetchPokemonData = async () => {
@@ -72,11 +70,61 @@ function Pokemon() {
         setLoading(false);
       }
     };
-    fetchPokemonData();
-  }, [id]);
+    //Making sure the data isn't fetched if fatal parameters are incorrect to avoid error flood
+    if (id < MinPokemon || id > MaxPokemon) {
+      navigate("/nopokemon");
+    } else if (isNaN(id)) {
+      navigate("/notfound");
+    } else {
+      fetchPokemonData();
+    }
+    //Preventing unwanted behavior
+  }, [id, navigate]);
 
-  const Image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+  // Main constants with data presence check
+  let Image = "";
+  if (!isNaN(id) || id > MinPokemon || id < MaxPokemon) {
+    Image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+  }
+  const Name =
+    pokemon && pokemon.name ? capitalizeFirstLetter(pokemon.name) : "???";
+  const Types = pokemon && pokemon.types;
+  const FirstType = Types && Types[0].type.name;
+  const LastType = Types && Types[Types.length - 1].type.name;
+  const Height = pokemon && (pokemon.height / 10).toFixed(1) + "m";
+  const Weight = pokemon && (pokemon.weight / 10).toFixed(1) + "kg";
+  const Abilities = pokemon && pokemon.abilities;
+  const BaseStats = pokemon && pokemon.stats;
+  const BaseStatsMap =
+    BaseStats &&
+    BaseStats.map((stat) => ({
+      name: stat.stat.name,
+      value: stat.base_stat,
+    }));
+  const FlavorTexts = pokemonSpecies && pokemonSpecies.flavor_text_entries;
 
+  // Pokedex handling
+  const handleToggleTeam = () => {
+    if (pokemon) {
+      dispatch(togglePokemonInTeam({ id, name: pokemon.name }));
+      const updatedTeam = team.some((p) => p.id === id)
+        ? team.filter((p) => p.id !== id)
+        : [...team, { id, name: pokemon.name }];
+      localStorage.setItem(STORAGE_NAME, JSON.stringify(updatedTeam));
+    }
+  };
+
+  const isPokemonInTeam = team.some((pokemon) => pokemon.id === id);
+
+  function isEvolutionName(name, evolutionName) {
+    if (name === evolutionName) {
+      return "text-black";
+    } else {
+      return "text-secondary";
+    }
+  }
+
+  //Rendered while loading or in case of error
   if (loading) {
     return (
       <div className="d-flex align-items-center justify-content-center mt-5">
@@ -91,39 +139,6 @@ function Pokemon() {
     return <Error err={error.message} />;
   }
 
-  const Name =
-    pokemon && pokemon.name ? capitalizeFirstLetter(pokemon.name) : "???";
-  const Types = pokemon && pokemon.types;
-  const FirstType = Types && Types[0].type.name;
-  const LastType = Types && Types[Types.length - 1].type.name;
-  const Height = pokemon && (pokemon.height / 10).toFixed(1) + "m";
-  const Weight = pokemon && (pokemon.weight / 10).toFixed(1) + "kg";
-  const Abilities = pokemon && pokemon.abilities;
-  const MinPokemon = 1;
-  const MaxPokemon = 1010;
-  const BaseStats = pokemon && pokemon.stats;
-  const BaseStatsMap =
-    BaseStats &&
-    BaseStats.map((stat) => ({
-      name: stat.stat.name,
-      value: stat.base_stat,
-    }));
-  const FlavorTexts = pokemonSpecies && pokemonSpecies.flavor_text_entries;
-
-  const handleToggleTeam = () => {
-    pokemon && dispatch(togglePokemonInTeam({ id, name: Name }));
-  };
-
-  const isPokemonInTeam = team.some((pokemon) => pokemon.id === id);
-
-  function isEvolutionName(name, evolutionName) {
-    if (name === evolutionName) {
-      return "text-black";
-    } else {
-      return "text-secondary";
-    }
-  }
-
   return (
     <div
       className="container-fluid d-flex flex-column flex-lg-row position-relative"
@@ -134,7 +149,7 @@ function Pokemon() {
     >
       {id > MinPokemon && (
         <Link
-          to={`/pokemon/${+id - 1}`}
+          to={`/pokemon/${id - 1}`}
           className="position-fixed top-50 start-0 translate-middle-y m-3"
           style={{ zIndex: 1000 }}
         >
@@ -145,7 +160,7 @@ function Pokemon() {
       )}
       {id < MaxPokemon && (
         <Link
-          to={`/pokemon/${+id + 1}`}
+          to={`/pokemon/${id + 1}`}
           className="position-fixed top-50 end-0 translate-middle-y m-3"
           style={{ zIndex: 1000 }}
         >
@@ -154,7 +169,12 @@ function Pokemon() {
           </button>
         </Link>
       )}
-      <div className={"py-3 py-lg-0 d-flex flex-grow-1 flex-column align-items-center justify-content-center text-center " + stylesPokemon.responsive_w_50}>
+      <div
+        className={
+          "py-3 py-lg-0 d-flex flex-grow-1 flex-column align-items-center justify-content-center text-center " +
+          stylesPokemon.responsive_w_50
+        }
+      >
         <h2 className="fw-lighter">#{id}</h2>
         <h1 className="fw-bold">{Name}</h1>
         <div style={{ maxWidth: "300px" }} className="position-relative my-3">
@@ -202,7 +222,9 @@ function Pokemon() {
       <div
         className={
           "d-flex flex-grow-1 flex-column align-items-center text-center " +
-          stylesPokemon.max_height_lg + " " + stylesPokemon.responsive_w_50
+          stylesPokemon.max_height_lg +
+          " " +
+          stylesPokemon.responsive_w_50
         }
       >
         <p className="fs-5 mb-1 mt-3 fw-bold">Main specs</p>

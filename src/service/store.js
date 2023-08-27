@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import globalPropsReducer from "./globalPropsSlice";
+import { STORAGE_NAME } from "./localStorage";
 
-const persistedTeam = JSON.parse(localStorage.getItem("team")) || [];
+const persistedTeam = JSON.parse(localStorage.getItem(STORAGE_NAME)) || [];
 
 const store = configureStore({
   reducer: {

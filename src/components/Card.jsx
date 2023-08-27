@@ -9,8 +9,7 @@ import {
   faMinus,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-
-// import PokeballSmall from "../assets/pokeball.png";
+import { STORAGE_NAME } from "../service/localStorage";
 
 function Card({ id, name }) {
   const { team } = useSelector(
@@ -23,8 +22,13 @@ function Card({ id, name }) {
 
   const Name = name ? capitalizeFirstLetter(name) : "???";
 
+  //Sync local storage with redux store
   const handleToggleTeam = () => {
-    dispatch(togglePokemonInTeam({id, name}));
+    dispatch(togglePokemonInTeam({ id, name }));
+    const updatedTeam = team.some((pokemon) => pokemon.id === id)
+      ? team.filter((pokemon) => pokemon.id !== id)
+      : [...team, { id, name }];
+    localStorage.setItem(STORAGE_NAME, JSON.stringify(updatedTeam));
   };
 
   const isPokemonInTeam = team.some((pokemon) => pokemon.id === id);

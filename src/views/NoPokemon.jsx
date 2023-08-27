@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "../styles/typeColors.module.css";
+import unknown_pokemon from "../assets/unknown_pokemon.gif";
 
 function NoPokemon() {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ function NoPokemon() {
     <div className="container-fluid m-auto">
       <div className="d-flex flex-column align-items-center justify-content-center my-3">
         <img
-          src="https://i.gifer.com/7AAg.gif"
+          src={unknown_pokemon}
           alt="Unknown pokemon"
           className="rounded"
         />

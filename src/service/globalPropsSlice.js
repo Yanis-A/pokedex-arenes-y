@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { STORAGE_NAME } from "./localStorage";
 
 const initialState = {
   search: "",
@@ -20,7 +21,7 @@ const globalPropsSlice = createSlice({
       } else {
         state.team.push({ id, name });
       }
-      localStorage.setItem("team", JSON.stringify(state.team));
+      localStorage.setItem(STORAGE_NAME, JSON.stringify(state.team));
     }, 
   },
 });
