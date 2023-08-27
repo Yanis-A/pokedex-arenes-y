@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import styles from "../styles/typeColors.module.css";
 import { setSearch } from "../service/globalPropsSlice";
 import { useEffect } from "react";
+// import InstallButton from "./InstallButton";
 
 function Navigation() {
   const { team, search } = useSelector((state) => state.globalProps);
@@ -62,7 +63,10 @@ function Navigation() {
               </div>
             </li>
           </ul>
-          <ul className="navbar-nav ml-auto my-0 mb-2 mb-lg-0">
+          <ul className="navbar-nav ml-auto my-0 mb-2 mb-lg-0 py-2 py-lg-0">
+            {/* <li className="nav-item my-1 my-lg-auto me-0 me-lg-3">
+              <InstallButton />
+            </li> */}
             <li className="nav-item">
               <Link to="/pokedex" className="nav-link">
                 <button
