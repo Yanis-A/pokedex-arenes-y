@@ -9,8 +9,10 @@ Pokedex
 Dynamic search
 ![image](https://github.com/Yanis-A/pokedex-arenes-y/assets/96735435/da34e4aa-1a3f-40f3-907d-f1fc06e425d6)
 Pokemon details
-![image](https://github.com/Yanis-A/pokedex-arenes-y/assets/96735435/828f5e12-6ebf-4ebd-9f72-fe573fe39d8e)
-![image](https://github.com/Yanis-A/pokedex-arenes-y/assets/96735435/cdc2f185-1ce0-4dd6-b0e8-0fa032ea67ff)
+![image](https://github.com/Yanis-A/pokedex-arenes-y/assets/96735435/682de978-2f23-45f8-966a-4b152a2730fa)
+![image](https://github.com/Yanis-A/pokedex-arenes-y/assets/96735435/e209f02f-adc8-4166-883b-efe448d702dc)
+
+
 
 
 
