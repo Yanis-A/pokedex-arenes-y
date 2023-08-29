@@ -103,7 +103,7 @@ export const getEnglishFlavorText = (flavorTexts) => {
   );
   if (englishEntries.length > 0) {
     // eslint-disable-next-line no-control-regex
-    return englishEntries[0].flavor_text.replace(/[\u000c\n]/g, " ");
+    return englishEntries[0].flavor_text.replace(/[\u000c\n]/g, " ").replace(/POKéMON/gi, "Pokémon");
   } else {
     return null;
   }
