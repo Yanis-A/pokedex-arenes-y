@@ -12,6 +12,8 @@ function Navigation() {
   const dispatch = useDispatch();
   const location = useLocation();
 
+  const isPokemonPage = location.pathname.startsWith('/pokemon/');
+
   useEffect(() => {
     dispatch(setSearch(""));
   }, [location.pathname, dispatch]);
@@ -50,7 +52,7 @@ function Navigation() {
                 Pokedex
               </Link>
             </li>
-            <li className="nav-item">
+            {!isPokemonPage && <li className="nav-item">
               <div className="input-group py-lg-0 py-2">
                 <input
                   type="text"
@@ -61,7 +63,7 @@ function Navigation() {
                   onChange={handleSearchChange}
                 />
               </div>
-            </li>
+            </li>}
           </ul>
           <ul className="navbar-nav ml-auto my-0 mb-2 mb-lg-0 py-2 py-lg-0">
             {/* <li className="nav-item my-1 my-lg-auto me-0 me-lg-3">
