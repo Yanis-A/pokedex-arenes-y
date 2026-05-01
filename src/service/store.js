@@ -10,9 +10,10 @@ const store = configureStore({
   },
   preloadedState: {
     globalProps: {
-      team: persistedTeam
-    }
-  }
+      search: "",
+      team: persistedTeam,
+    },
+  },
 });
 
 export default store;
