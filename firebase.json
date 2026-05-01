@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "reactdex-app",
+    "site": "thereactdex",
     "public": "dist",
     "ignore": [
       "firebase.json",
