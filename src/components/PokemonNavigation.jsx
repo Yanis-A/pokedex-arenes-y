@@ -15,6 +15,7 @@ function PokemonNavigation({ id, min, max }) {
           <Link
             to={`/pokemon/${id - 1}`}
             title="Previous Pokémon"
+            aria-label={`Previous Pokémon, #${id - 1}`}
             className="btn btn-outline-dark"
           >
             <FontAwesomeIcon icon={faChevronLeft} /> #{id - 1}
@@ -26,6 +27,7 @@ function PokemonNavigation({ id, min, max }) {
           <Link
             to={`/pokemon/${id + 1}`}
             title="Next Pokémon"
+            aria-label={`Next Pokémon, #${id + 1}`}
             className="btn btn-outline-dark"
           >
             #{id + 1} <FontAwesomeIcon icon={faChevronRight} />
@@ -40,6 +42,7 @@ function PokemonNavigation({ id, min, max }) {
         <Link
           to={`/pokemon/${id - 1}`}
           title="Previous Pokémon"
+          aria-label={`Previous Pokémon, #${id - 1}`}
           className="btn btn-outline-dark position-fixed top-50 start-0 translate-middle-y m-3 d-none d-lg-inline-flex"
           style={{ zIndex: 1000 }}
         >
@@ -50,6 +53,7 @@ function PokemonNavigation({ id, min, max }) {
         <Link
           to={`/pokemon/${id + 1}`}
           title="Next Pokémon"
+          aria-label={`Next Pokémon, #${id + 1}`}
           className="btn btn-outline-dark position-fixed top-50 end-0 translate-middle-y m-3 d-none d-lg-inline-flex"
           style={{ zIndex: 1000 }}
         >

@@ -12,6 +12,7 @@ const store = configureStore({
     globalProps: {
       search: "",
       team: persistedTeam,
+      lastTeamAction: null,
     },
   },
 });

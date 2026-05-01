@@ -31,6 +31,7 @@ import stylesPokemon from "../styles/Pokemon.module.css";
 import PokemonNavigation from "../components/PokemonNavigation";
 import PokemonEvolutions from "../components/PokemonEvolutions";
 import PokemonSpeciesItem from "../components/PokemonSpeciesItem";
+import PokemonTypeMatchups from "../components/PokemonTypeMatchups";
 
 const FALLBACK_IMAGE =
   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png";
@@ -141,12 +142,30 @@ function Pokemon() {
 
   const isPokemonInTeam = team.some((p) => p.id === id);
 
-  //Rendered while loading or in case of error
   if (loading) {
     return (
-      <div className="d-flex align-items-center justify-content-center mt-5">
-        <div className="spinner-border text-warning" role="status">
-          <span className="visually-hidden">Loading...</span>
+      <div
+        className="container-fluid d-flex flex-column flex-lg-row flex-grow-1 placeholder-glow"
+        aria-busy="true"
+        aria-label="Loading Pokémon"
+      >
+        <div className="py-3 d-flex flex-grow-1 flex-column align-items-center justify-content-center">
+          <span className="placeholder col-3 mb-2"></span>
+          <span className="placeholder col-6 mb-3" style={{ height: "2rem" }}></span>
+          <div
+            className="placeholder rounded my-3"
+            style={{ width: "min(280px, 80%)", height: "280px" }}
+          ></div>
+          <span className="placeholder col-4 mt-2"></span>
+        </div>
+        <div className="py-3 d-flex flex-grow-1 flex-column align-items-center px-3">
+          <span className="placeholder col-4 mb-3" style={{ height: "1.5rem" }}></span>
+          <span className="placeholder col-8 mb-2"></span>
+          <span className="placeholder col-7 mb-2"></span>
+          <span className="placeholder col-9 mb-2"></span>
+          <span className="placeholder col-6 mb-2"></span>
+          <span className="placeholder col-8 mb-2"></span>
+          <span className="placeholder col-5 mb-2"></span>
         </div>
       </div>
     );
@@ -344,6 +363,11 @@ function Pokemon() {
             )}
           </div>
         </div>
+        <hr
+          style={{ width: "300px" }}
+          className="border border-secondary border-1 opacity-50 m-1"
+        />
+        <PokemonTypeMatchups types={Types} />
         <hr
           style={{ width: "300px" }}
           className="border border-secondary border-1 opacity-50 m-1"

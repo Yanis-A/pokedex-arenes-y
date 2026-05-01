@@ -67,6 +67,12 @@ function Card({ id, name }) {
           <button
             type="button"
             title={isPokemonInTeam ? "Remove from team" : "Add to team"}
+            aria-label={
+              isPokemonInTeam
+                ? `Remove ${Name} from team`
+                : `Add ${Name} to team`
+            }
+            aria-pressed={isPokemonInTeam}
             onClick={handleToggleTeam}
             className="btn btn-outline-light ms-1 flex-grow-0 text-dark"
           >

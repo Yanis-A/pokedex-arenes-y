@@ -24,3 +24,8 @@ export const fetchPokemonEvolutionChain = async (url) => {
   const response = await axios.get(url);
   return response.data;
 };
+
+export const fetchType = async (typeName) => {
+  const response = await axios.get(`${BASE_URL}/type/${typeName}`);
+  return response.data;
+};

@@ -1,9 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/logoV2.png";
 import { useSelector, useDispatch } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import styles from "../styles/typeColors.module.css";
 import { setSearch } from "../service/globalPropsSlice";
 import { useEffect, useState } from "react";
+
+const THEME_KEY = "reactdex_theme";
 
 function Navigation() {
   const { team, search } = useSelector((state) => state.globalProps);
@@ -24,6 +28,15 @@ function Navigation() {
   }, []);
 
   const showNavLogo = !isHome || scrolled;
+
+  const [theme, setTheme] = useState(
+    () => localStorage.getItem(THEME_KEY) || "light"
+  );
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-bs-theme", theme);
+    localStorage.setItem(THEME_KEY, theme);
+  }, [theme]);
 
   useEffect(() => {
     dispatch(setSearch(""));
@@ -86,11 +99,28 @@ function Navigation() {
               </li>
             )}
           </ul>
-          <ul className="navbar-nav ml-auto my-0 mb-2 mb-lg-0 py-2 py-lg-0">
+          <ul className="navbar-nav ml-auto my-0 mb-2 mb-lg-0 py-2 py-lg-0 align-items-lg-center">
+            <li className="nav-item me-lg-2 mb-2 mb-lg-0">
+              <button
+                type="button"
+                onClick={() =>
+                  setTheme((t) => (t === "light" ? "dark" : "light"))
+                }
+                title={
+                  theme === "light"
+                    ? "Switch to dark mode"
+                    : "Switch to light mode"
+                }
+                aria-label="Toggle color theme"
+                className="btn btn-outline-secondary"
+              >
+                <FontAwesomeIcon icon={theme === "light" ? faMoon : faSun} />
+              </button>
+            </li>
             <li className="nav-item">
               <Link
                 to="/pokedex"
-                title="See in Pokedex"
+                title="See in Pokédex"
                 className={"btn text-white " + styles.pokeball_red_bg}
               >
                 My Team : {team.length} Pokémon
