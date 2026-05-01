@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 // Components
 import Error from "../components/Error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faMinus, faPlus, faVolumeHigh } from "@fortawesome/free-solid-svg-icons";
 import StatBar from "../components/StatBar";
 
 // Functions
@@ -191,7 +191,27 @@ function Pokemon() {
         }
       >
         <h2 className="fw-lighter">#{id}</h2>
-        <h1 className="fw-bold">{Name}</h1>
+        <div className="d-flex flex-row align-items-center justify-content-center gap-2">
+          <h1 className="fw-bold mb-0">{Name}</h1>
+          {pokemon?.cries?.latest && (
+            <button
+              type="button"
+              onClick={() => {
+                const audio = new Audio(pokemon.cries.latest);
+                audio.volume = 0.4;
+                audio.play().catch((err) =>
+                  console.error("Failed to play cry:", err)
+                );
+              }}
+              title="Play cry"
+              aria-label={`Play ${Name}'s cry`}
+              className="btn btn-outline-secondary rounded-circle d-inline-flex align-items-center justify-content-center"
+              style={{ width: "2.25rem", height: "2.25rem", padding: 0 }}
+            >
+              <FontAwesomeIcon icon={faVolumeHigh} />
+            </button>
+          )}
+        </div>
         <div style={{ maxWidth: "300px" }} className="position-relative my-3">
           {isPokemonInTeam && (
             <div className="position-absolute top-0 end-0 m-1">
