@@ -68,8 +68,8 @@ function ChainNode({ node, currentName, capitalize }) {
   if (!name) return null;
 
   const linkClass = isCurrent
-    ? "fs-6 fw-bold text-black text-decoration-none"
-    : "fs-6 text-secondary text-decoration-none";
+    ? "fs-6 fw-bold text-body text-decoration-none evolution-link"
+    : "fs-6 text-secondary text-decoration-none evolution-link";
 
   const NameLink = id ? (
     <Link to={`/pokemon/${id}`} className={linkClass} title={name}>

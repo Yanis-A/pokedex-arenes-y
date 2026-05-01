@@ -47,6 +47,7 @@ function Pokemon() {
   const [evolutionChain, setEvolutionChain] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [playingCry, setPlayingCry] = useState(false);
 
   const { id: rawId } = useParams();
   const id = Number(rawId);
@@ -85,6 +86,7 @@ function Pokemon() {
     } else {
       fetchPokemonData();
     }
+    setPlayingCry(false);
   }, [id, navigate]);
 
   const Image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
@@ -196,14 +198,21 @@ function Pokemon() {
           {pokemon?.cries?.latest && (
             <button
               type="button"
+              disabled={playingCry}
               onClick={() => {
+                if (playingCry) return;
                 const audio = new Audio(pokemon.cries.latest);
                 audio.volume = 0.4;
-                audio.play().catch((err) =>
-                  console.error("Failed to play cry:", err)
-                );
+                const release = () => setPlayingCry(false);
+                audio.addEventListener("ended", release);
+                audio.addEventListener("error", release);
+                setPlayingCry(true);
+                audio.play().catch((err) => {
+                  console.error("Failed to play cry:", err);
+                  setPlayingCry(false);
+                });
               }}
-              title="Play cry"
+              title={playingCry ? "Playing..." : "Play cry"}
               aria-label={`Play ${Name}'s cry`}
               className="btn btn-outline-secondary rounded-circle d-inline-flex align-items-center justify-content-center"
               style={{ width: "2.25rem", height: "2.25rem", padding: 0 }}

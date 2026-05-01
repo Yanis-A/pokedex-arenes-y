@@ -74,7 +74,7 @@ function Card({ id, name }) {
             }
             aria-pressed={isPokemonInTeam}
             onClick={handleToggleTeam}
-            className="btn btn-outline-light ms-1 flex-grow-0 text-dark"
+            className="btn btn-outline-secondary ms-1 flex-grow-0"
           >
             <FontAwesomeIcon icon={isPokemonInTeam ? faMinus : faPlus} />
           </button>

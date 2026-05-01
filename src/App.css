@@ -10,6 +10,19 @@
   border-radius: 2px;
 }
 
+/* Clickable evolution names: pill background on hover so users notice they're links */
+.evolution-link {
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  transition: background-color 150ms ease, color 150ms ease;
+  white-space: nowrap;
+}
+.evolution-link:hover,
+.evolution-link:focus-visible {
+  text-decoration: underline;
+  background-color: rgba(128, 128, 128, 0.18);
+}
+
 *{
   scroll-behavior: smooth;
   scrollbar-width: thin;
