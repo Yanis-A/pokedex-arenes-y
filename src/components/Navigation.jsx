@@ -49,18 +49,11 @@ function Navigation() {
   return (
     <nav className="navbar navbar-expand-lg sticky-top bg-body-tertiary shadow">
       <div className="container-fluid">
-        <Link
-          to="/"
-          className="navbar-brand"
-          style={{
-            opacity: showNavLogo ? 1 : 0,
-            visibility: showNavLogo ? "visible" : "hidden",
-            transition: "opacity 200ms ease",
-          }}
-          aria-hidden={!showNavLogo}
-        >
-          <img width={150} src={logo} alt="ReactDex Logo" />
-        </Link>
+        {showNavLogo && (
+          <Link to="/" className="navbar-brand">
+            <img width={150} src={logo} alt="ReactDex Logo" />
+          </Link>
+        )}
         <button
           className="navbar-toggler"
           type="button"
