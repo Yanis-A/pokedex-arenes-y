@@ -31,11 +31,15 @@ function Card({ id, name }) {
     <Link
       to={`/pokemon/${id}`}
       aria-label={`View details of ${Name}`}
-      className={
-        "card h-100 shadow-sm position-relative d-flex flex-column align-items-center text-decoration-none text-body" +
-        (isPokemonInTeam ? " border border-2 border-warning" : "")
-      }
-      style={{ width: "10rem" }}
+      className="card h-100 shadow-sm position-relative d-flex flex-column align-items-center text-decoration-none text-body"
+      style={{
+        width: "10rem",
+        outline: isPokemonInTeam
+          ? "2px solid var(--bs-warning)"
+          : "2px solid transparent",
+        outlineOffset: "-2px",
+        borderRadius: "var(--bs-card-border-radius)",
+      }}
     >
       <button
         type="button"
