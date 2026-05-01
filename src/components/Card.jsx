@@ -37,6 +37,7 @@ function Card({ id, name }) {
         src={Image}
         className="card-img-top"
         alt={Name}
+        loading="lazy"
         onError={(e) => {
           if (e.currentTarget.src !== FALLBACK_IMAGE) {
             e.currentTarget.src = FALLBACK_IMAGE;

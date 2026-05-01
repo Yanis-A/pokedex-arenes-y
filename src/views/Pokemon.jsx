@@ -22,6 +22,7 @@ import {
 } from "../service/utils";
 import { togglePokemonInTeam } from "../service/globalPropsSlice";
 import { getColorForType } from "../service/utils";
+import { MIN_POKEMON_ID, MAX_POKEMON_ID } from "../service/constants";
 
 // Styling
 import styles from "../styles/typeColors.module.css";
@@ -49,8 +50,6 @@ function Pokemon() {
   const { id: rawId } = useParams();
   const id = Number(rawId);
 
-  const MinPokemon = 1;
-  const MaxPokemon = 1010;
 
   useEffect(() => {
     const fetchPokemonData = async () => {
@@ -80,7 +79,7 @@ function Pokemon() {
 
     if (Number.isNaN(id)) {
       navigate("/notfound");
-    } else if (id < MinPokemon || id > MaxPokemon) {
+    } else if (id < MIN_POKEMON_ID || id > MAX_POKEMON_ID) {
       navigate("/nopokemon");
     } else {
       fetchPokemonData();
@@ -165,7 +164,7 @@ function Pokemon() {
       }}
     >
       {/* Navigation through available pokemons */}
-      <PokemonNavigation id={id} min={MinPokemon} max={MaxPokemon} />
+      <PokemonNavigation id={id} min={MIN_POKEMON_ID} max={MAX_POKEMON_ID} />
       <div
         className={
           "py-3 py-lg-0 d-flex flex-grow-1 flex-column align-items-center justify-content-center text-center " +

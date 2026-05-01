@@ -1,9 +1,12 @@
 import axios from "axios";
+import { MAX_POKEMON_ID } from "./constants";
 
 const BASE_URL = "https://pokeapi.co/api/v2";
 
 export const fetchPokemons = async () => {
-  const response = await axios.get(`${BASE_URL}/pokemon/?limit=1010`);
+  const response = await axios.get(
+    `${BASE_URL}/pokemon/?limit=${MAX_POKEMON_ID}`
+  );
   return response.data;
 };
 
