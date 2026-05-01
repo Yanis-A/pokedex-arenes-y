@@ -224,6 +224,8 @@ function Pokemon() {
       <div
         className={
           "d-flex flex-grow-1 flex-column align-items-center text-center " +
+          stylesPokemon.max_height_lg +
+          " " +
           stylesPokemon.responsive_w_50
         }
       >

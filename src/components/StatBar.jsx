@@ -18,7 +18,7 @@ function StatBar({ name, value, type }) {
         }}
       >
         <div
-          className="progress-bar text-black fw-bolder"
+          className="progress-bar progress-bar-striped progress-bar-animated text-black fw-bolder"
           role="progressbar"
           style={{
             width: `${(value * 100) / 255}%`,
