@@ -4,6 +4,8 @@ import { fetchPokemons } from "../service/service";
 import Error from "../components/Error";
 import Card from "../components/Card";
 import PropTypes from "prop-types";
+import not_found from '../assets/not_found.gif';
+import empty from '../assets/pokedex_empty.gif';
 
 function PokemonList({ teamArray }) {
   const { search } = useSelector((state) => state.globalProps);
@@ -70,9 +72,10 @@ function PokemonList({ teamArray }) {
     return (
       <div className="d-flex flex-column align-items-center my-3">
         <img
-          src="https://thumbs.gfycat.com/EachWellinformedAidi-size_restricted.gif"
-          alt="Empty PokeBall"
+          src={empty}
+          alt="Empty Pokéball"
           className="rounded"
+          width={200}
         />
         <p className="fs-3">No Pokémon found!</p>
       </div>
@@ -90,9 +93,10 @@ function PokemonList({ teamArray }) {
                 className="d-flex flex-column align-items-center my-3"
               >
                 <img
-                  src="https://thumbs.gfycat.com/EachWellinformedAidi-size_restricted.gif"
-                  alt="Empty PokeBall"
+                  src={not_found}
+                  alt="No Pokémon found!"
                   className="rounded"
+                  width={250}
                 />
                 <p className="fs-3">{pokemon.name}</p>
               </div>
