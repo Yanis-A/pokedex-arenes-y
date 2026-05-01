@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/logoV2.png";
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,9 +14,10 @@ function Navigation() {
 
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const isPokemonPage = location.pathname.startsWith("/pokemon/");
   const isHome = location.pathname === "/";
+  const isListPage = isHome || location.pathname === "/pokedex";
 
   const [scrolled, setScrolled] = useState(false);
 
@@ -38,12 +39,12 @@ function Navigation() {
     localStorage.setItem(THEME_KEY, theme);
   }, [theme]);
 
-  useEffect(() => {
-    dispatch(setSearch(""));
-  }, [location.pathname, dispatch]);
-
   const handleSearchChange = (event) => {
-    dispatch(setSearch(event.target.value));
+    const value = event.target.value;
+    dispatch(setSearch(value));
+    if (!isListPage && value.length > 0) {
+      navigate("/");
+    }
   };
 
   return (
@@ -77,20 +78,18 @@ function Navigation() {
                 Pokédex
               </Link>
             </li>
-            {!isPokemonPage && (
-              <li className="nav-item">
-                <div className="input-group py-lg-0 py-2">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Search Pokémon by name"
-                    aria-label="Search Pokémon by name"
-                    value={search || ""}
-                    onChange={handleSearchChange}
-                  />
-                </div>
-              </li>
-            )}
+            <li className="nav-item">
+              <div className="input-group py-lg-0 py-2">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search Pokémon by name"
+                  aria-label="Search Pokémon by name"
+                  value={search || ""}
+                  onChange={handleSearchChange}
+                />
+              </div>
+            </li>
           </ul>
           <ul className="navbar-nav ml-auto my-0 mb-2 mb-lg-0 py-2 py-lg-0 align-items-lg-center">
             <li className="nav-item me-lg-2 mb-2 mb-lg-0">

@@ -28,7 +28,7 @@ function Card({ id, name }) {
   return (
     <div
       className={
-        "card shadow-sm position-relative d-flex flex-column align-items-center justify-content-center" +
+        "card h-100 shadow-sm position-relative d-flex flex-column align-items-center" +
         (isPokemonInTeam ? " border border-2 border-warning" : "")
       }
       style={{ width: "10rem" }}
@@ -54,10 +54,10 @@ function Card({ id, name }) {
           </span>
         </div>
       )}
-      <div className="card-body text-center">
+      <div className="card-body text-center d-flex flex-column">
         <small>#{id}</small>
         <h5 className="card-title fw-bold">{Name}</h5>
-        <div className="d-flex">
+        <div className="d-flex mt-auto">
           <Link
             to={`/pokemon/${id}`}
             className="btn btn-outline-warning flex-grow-1"

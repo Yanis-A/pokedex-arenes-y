@@ -84,7 +84,7 @@ function PokemonList({ teamArray }) {
 
   return (
     <div className="container-fluid m-auto">
-      <div className="d-flex flex-row flex-wrap align-items-center justify-content-center">
+      <div className="d-flex flex-row flex-wrap align-items-stretch justify-content-center">
         {arrayToReturn.map((pokemon) => {
           if (pokemon.name === "No Pokémon found!") {
             return (
