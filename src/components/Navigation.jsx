@@ -1,4 +1,9 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import logo from "../assets/logoV2.png";
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,9 +20,18 @@ function Navigation() {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const isHome = location.pathname === "/";
   const isListPage = isHome || location.pathname === "/pokedex";
+
+  // Sync URL ?q= → Redux on list pages so refresh / browser-back rebuilds the
+  // filter state from the URL.
+  useEffect(() => {
+    if (!isListPage) return;
+    const q = searchParams.get("q") || "";
+    if (q !== search) dispatch(setSearch(q));
+  }, [searchParams, isListPage, dispatch, search]);
 
   const [scrolled, setScrolled] = useState(false);
 
@@ -42,8 +56,12 @@ function Navigation() {
   const handleSearchChange = (event) => {
     const value = event.target.value;
     dispatch(setSearch(value));
-    if (!isListPage && value.length > 0) {
-      navigate("/");
+    if (isListPage) {
+      // Mirror the search in the URL so the browser history captures it.
+      setSearchParams(value ? { q: value } : {}, { replace: true });
+    } else if (value.length > 0) {
+      // Typing from a non-list page bounces to the home with the query.
+      navigate(`/?q=${encodeURIComponent(value)}`);
     }
   };
 
