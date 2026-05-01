@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PokemonList from "../components/PokemonList";
+import Logo from "../assets/logoV2.png";
 import styles from "../styles/typeColors.module.css";
 
 const ADJECTIVES = [
@@ -23,6 +24,7 @@ function List() {
   return (
     <div className="container-fluid">
       <div className="d-flex flex-column align-items-center my-3 fs-5">
+        <img width={300} src={Logo} alt="ReactDex Logo" />
         <p className="mb-1">
           Welcome{" "}
           <span className={"fw-bold " + styles.pokeball_red}>{adjective}</span>{" "}

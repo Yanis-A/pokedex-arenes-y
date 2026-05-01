@@ -3,7 +3,7 @@ import logo from "../assets/logoV2.png";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "../styles/typeColors.module.css";
 import { setSearch } from "../service/globalPropsSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function Navigation() {
   const { team, search } = useSelector((state) => state.globalProps);
@@ -12,6 +12,18 @@ function Navigation() {
   const location = useLocation();
 
   const isPokemonPage = location.pathname.startsWith("/pokemon/");
+  const isHome = location.pathname === "/";
+
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 100);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const showNavLogo = !isHome || scrolled;
 
   useEffect(() => {
     dispatch(setSearch(""));
@@ -24,7 +36,16 @@ function Navigation() {
   return (
     <nav className="navbar navbar-expand-lg sticky-top bg-body-tertiary shadow">
       <div className="container-fluid">
-        <Link to="/" className="navbar-brand">
+        <Link
+          to="/"
+          className="navbar-brand"
+          style={{
+            opacity: showNavLogo ? 1 : 0,
+            visibility: showNavLogo ? "visible" : "hidden",
+            transition: "opacity 200ms ease",
+          }}
+          aria-hidden={!showNavLogo}
+        >
           <img width={150} src={logo} alt="ReactDex Logo" />
         </Link>
         <button

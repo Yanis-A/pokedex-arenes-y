@@ -4,9 +4,39 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 function PokemonNavigation({ id, min, max }) {
+  const hasPrev = id > min;
+  const hasNext = id < max;
+
   return (
     <>
-      {id > min && (
+      {/* Inline navigation, mobile / tablet only */}
+      <div className="d-flex d-lg-none justify-content-between align-items-center w-100 px-3 pt-3">
+        {hasPrev ? (
+          <Link
+            to={`/pokemon/${id - 1}`}
+            title="Previous Pokémon"
+            className="btn btn-outline-dark"
+          >
+            <FontAwesomeIcon icon={faChevronLeft} /> #{id - 1}
+          </Link>
+        ) : (
+          <span />
+        )}
+        {hasNext ? (
+          <Link
+            to={`/pokemon/${id + 1}`}
+            title="Next Pokémon"
+            className="btn btn-outline-dark"
+          >
+            #{id + 1} <FontAwesomeIcon icon={faChevronRight} />
+          </Link>
+        ) : (
+          <span />
+        )}
+      </div>
+
+      {/* Floating arrows, desktop only */}
+      {hasPrev && (
         <Link
           to={`/pokemon/${id - 1}`}
           title="Previous Pokémon"
@@ -16,7 +46,7 @@ function PokemonNavigation({ id, min, max }) {
           <FontAwesomeIcon icon={faChevronLeft} />
         </Link>
       )}
-      {id < max && (
+      {hasNext && (
         <Link
           to={`/pokemon/${id + 1}`}
           title="Next Pokémon"
