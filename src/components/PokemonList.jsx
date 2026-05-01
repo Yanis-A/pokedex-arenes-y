@@ -21,15 +21,14 @@ function PokemonList({ teamArray }) {
         setError(null);
         if (teamArray) {
           setPokemons(teamArray);
-          setLoading(false);
         } else {
           const data = await fetchPokemons();
-          setPokemons(data.results);
-          setLoading(false);
+          setPokemons(data?.results ?? []);
         }
-      } catch (error) {
-        setError(error);
-        console.error("Error fetching pokemons: ", error);
+      } catch (err) {
+        setError(err);
+        console.error("Error fetching pokemons:", err);
+      } finally {
         setLoading(false);
       }
     };
@@ -47,8 +46,9 @@ function PokemonList({ teamArray }) {
   if (search === "") {
     arrayToReturn = pokemons;
   } else {
+    const needle = search.toLowerCase();
     const filteredPokemons = pokemons.filter((pokemon) =>
-      pokemon.name.startsWith(search)
+      pokemon.name.toLowerCase().includes(needle)
     );
     arrayToReturn =
       filteredPokemons.length > 0

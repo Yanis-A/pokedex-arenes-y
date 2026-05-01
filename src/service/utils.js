@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-// Capitzalize string
+// Capitalize string
 export function capitalizeFirstLetter(string) {
   if (typeof string !== "string" || string.length === 0) {
     return string;

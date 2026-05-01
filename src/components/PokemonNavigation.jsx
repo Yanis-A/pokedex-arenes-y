@@ -1,35 +1,29 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChevronLeft,
-  faChevronRight,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
-// Returns navigation buttons to the previous and next pokemon
 function PokemonNavigation({ id, min, max }) {
   return (
     <>
       {id > min && (
         <Link
           to={`/pokemon/${id - 1}`}
-          className="position-fixed top-50 start-0 translate-middle-y m-3"
+          title="Previous Pokémon"
+          className="btn btn-outline-dark position-fixed top-50 start-0 translate-middle-y m-3"
           style={{ zIndex: 1000 }}
         >
-          <button className="btn btn-outline-dark" title="Previous Pokémon">
-            <FontAwesomeIcon icon={faChevronLeft} />
-          </button>
+          <FontAwesomeIcon icon={faChevronLeft} />
         </Link>
       )}
       {id < max && (
         <Link
           to={`/pokemon/${id + 1}`}
-          className="position-fixed top-50 end-0 translate-middle-y m-3"
+          title="Next Pokémon"
+          className="btn btn-outline-dark position-fixed top-50 end-0 translate-middle-y m-3"
           style={{ zIndex: 1000 }}
         >
-          <button className="btn btn-outline-dark" title="Next Pokémon">
-            <FontAwesomeIcon icon={faChevronRight} />
-          </button>
+          <FontAwesomeIcon icon={faChevronRight} />
         </Link>
       )}
     </>

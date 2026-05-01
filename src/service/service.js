@@ -1,51 +1,23 @@
 import axios from "axios";
 
-// Fetch all pokemons
+const BASE_URL = "https://pokeapi.co/api/v2";
+
 export const fetchPokemons = async () => {
-  try {
-    const response = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon/?limit=1010`
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching pokemons:", error);
-    return [];
-  }
+  const response = await axios.get(`${BASE_URL}/pokemon/?limit=1010`);
+  return response.data;
 };
 
-// Fetch a pokemon by id
 export const fetchPokemonById = async (id) => {
-  try {
-    const response = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon/${id}`
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching pokemon:", error);
-    return [];
-  }
+  const response = await axios.get(`${BASE_URL}/pokemon/${id}`);
+  return response.data;
 };
 
-// Fetch a pokemon species by id
 export const fetchPokemonSpeciesById = async (id) => {
-  try {
-    const response = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon-species/${id}`
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching pokemon species:", error);
-    return [];
-  }
+  const response = await axios.get(`${BASE_URL}/pokemon-species/${id}`);
+  return response.data;
 };
 
-// Fetch a pokemon evolution chain by url
 export const fetchPokemonEvolutionChain = async (url) => {
-  try {
-    const response = await axios.get(url);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching pokemon species:", error);
-    return [];
-  }
+  const response = await axios.get(url);
+  return response.data;
 };

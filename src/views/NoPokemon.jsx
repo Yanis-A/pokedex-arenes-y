@@ -17,28 +17,21 @@ function NoPokemon() {
   return (
     <div className="container-fluid m-auto">
       <div className="d-flex flex-column align-items-center justify-content-center my-3">
-        <img
-          src={unknown_pokemon}
-          alt="Unknown pokemon"
-          className="rounded"
-        />
+        <img src={unknown_pokemon} alt="Unknown pokemon" className="rounded" />
         <h1>Uh oh...</h1>
-        <p>This pokemon does&apos;t (currently) exist or isn&apos;t in our database.</p>
+        <p>This pokemon doesn&apos;t (currently) exist or isn&apos;t in our database.</p>
         {countdown > 1 ? (
           <p>Redirecting to the home page in {countdown - 1} seconds...</p>
         ) : (
           <p>Redirecting to the home page...</p>
         )}
-        {!countdown && (
-          <Link to="/">
-            <button
-              className={"btn" + styles.pokeball_red_bg}
-              title="Take me back!"
-            >
-              Back to home page
-            </button>
-          </Link>
-        )}
+        <Link
+          to="/"
+          title="Take me back!"
+          className={"btn text-white " + styles.pokeball_red_bg}
+        >
+          Back to home page
+        </Link>
       </div>
     </div>
   );

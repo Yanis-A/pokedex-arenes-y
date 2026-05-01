@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import styles from "../styles/typeColors.module.css";
 import { setSearch } from "../service/globalPropsSlice";
 import { useEffect } from "react";
-// import InstallButton from "./InstallButton";
 
 function Navigation() {
   const { team, search } = useSelector((state) => state.globalProps);
@@ -12,15 +11,14 @@ function Navigation() {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const isPokemonPage = location.pathname.startsWith('/pokemon/');
+  const isPokemonPage = location.pathname.startsWith("/pokemon/");
 
   useEffect(() => {
     dispatch(setSearch(""));
   }, [location.pathname, dispatch]);
 
   const handleSearchChange = (event) => {
-    const value = event.target.value;
-    dispatch(setSearch(value));
+    dispatch(setSearch(event.target.value));
   };
 
   return (
@@ -52,32 +50,29 @@ function Navigation() {
                 Pokedex
               </Link>
             </li>
-            {!isPokemonPage && <li className="nav-item">
-              <div className="input-group py-lg-0 py-2">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search Pokémon by name"
-                  aria-label="Search Pokémon by name"
-                  value={search || ""}
-                  onChange={handleSearchChange}
-                />
-              </div>
-            </li>}
+            {!isPokemonPage && (
+              <li className="nav-item">
+                <div className="input-group py-lg-0 py-2">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search Pokémon by name"
+                    aria-label="Search Pokémon by name"
+                    value={search || ""}
+                    onChange={handleSearchChange}
+                  />
+                </div>
+              </li>
+            )}
           </ul>
           <ul className="navbar-nav ml-auto my-0 mb-2 mb-lg-0 py-2 py-lg-0">
-            {/* <li className="nav-item my-1 my-lg-auto me-0 me-lg-3">
-              <InstallButton />
-            </li> */}
             <li className="nav-item">
-              <Link to="/pokedex" className="nav-link">
-                <button
-                  type="button"
-                  title="See in Pokedex"
-                  className={"btn text-white " + styles.pokeball_red_bg}
-                >
-                  My Team : {team.length} Pokémon{team.length !== 1 ? "s" : ""}
-                </button>
+              <Link
+                to="/pokedex"
+                title="See in Pokedex"
+                className={"btn text-white " + styles.pokeball_red_bg}
+              >
+                My Team : {team.length} Pokémon{team.length !== 1 ? "s" : ""}
               </Link>
             </li>
           </ul>

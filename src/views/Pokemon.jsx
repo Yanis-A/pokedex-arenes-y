@@ -25,13 +25,14 @@ import { getColorForType } from "../service/utils";
 
 // Styling
 import styles from "../styles/typeColors.module.css";
-import stylesPokemon from "../styles/pokemon.module.css";
+import stylesPokemon from "../styles/Pokemon.module.css";
 
-// Constants
-import { STORAGE_NAME } from "../service/localStorage";
 import PokemonNavigation from "../components/PokemonNavigation";
 import PokemonEvolutions from "../components/PokemonEvolutions";
 import PokemonSpeciesItem from "../components/PokemonSpeciesItem";
+
+const FALLBACK_IMAGE =
+  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png";
 
 function Pokemon() {
   const { team } = useSelector((state) => state.globalProps);
@@ -39,15 +40,14 @@ function Pokemon() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [pokemon, setPokemon] = useState([]);
-  const [pokemonSpecies, setPokemonSpecies] = useState([]);
-  const [evolutionChain, setEvolutionChain] = useState([]);
+  const [pokemon, setPokemon] = useState(null);
+  const [pokemonSpecies, setPokemonSpecies] = useState(null);
+  const [evolutionChain, setEvolutionChain] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  let { id } = useParams();
-  // Make id a number back
-  id = +id;
+  const { id: rawId } = useParams();
+  const id = Number(rawId);
 
   const MinPokemon = 1;
   const MaxPokemon = 1010;
@@ -64,36 +64,31 @@ function Pokemon() {
         const data_species = await fetchPokemonSpeciesById(id);
         setPokemonSpecies(data_species);
 
-        const data_evolution = await fetchPokemonEvolutionChain(
-          data_species?.evolution_chain?.url
-        );
-        setEvolutionChain(data_evolution);
-
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        console.error(`"Error fetching pokemon #${id} info: "`, error);
+        if (data_species?.evolution_chain?.url) {
+          const data_evolution = await fetchPokemonEvolutionChain(
+            data_species.evolution_chain.url
+          );
+          setEvolutionChain(data_evolution);
+        }
+      } catch (err) {
+        setError(err);
+        console.error(`Error fetching pokemon #${id} info:`, err);
+      } finally {
         setLoading(false);
       }
     };
-    //Making sure the data isn't fetched if fatal parameters are incorrect to avoid error flood
-    if (id < MinPokemon || id > MaxPokemon) {
-      navigate("/nopokemon");
-    } else if (isNaN(id)) {
+
+    if (Number.isNaN(id)) {
       navigate("/notfound");
+    } else if (id < MinPokemon || id > MaxPokemon) {
+      navigate("/nopokemon");
     } else {
       fetchPokemonData();
     }
-    //Preventing unwanted behavior
   }, [id, navigate]);
 
-  // Main constants with data presence check
-  let Image = "";
-  if (!isNaN(id) || id > MinPokemon || id < MaxPokemon) {
-    Image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
-  }
-  const Name =
-    pokemon && pokemon.name ? capitalizeFirstLetter(pokemon.name) : "???";
+  const Image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+  const Name = pokemon?.name ? capitalizeFirstLetter(pokemon.name) : "???";
   const Types = pokemon && pokemon.types;
   const FirstType = Types && Types[0].type.name;
   const LastType = Types && Types[Types.length - 1].type.name;
@@ -139,18 +134,13 @@ function Pokemon() {
     },
   ];
 
-  // Pokedex handling
   const handleToggleTeam = () => {
-    if (pokemon) {
+    if (pokemon?.name) {
       dispatch(togglePokemonInTeam({ id, name: pokemon.name }));
-      const updatedTeam = team.some((p) => p.id === id)
-        ? team.filter((p) => p.id !== id)
-        : [...team, { id, name: pokemon.name }];
-      localStorage.setItem(STORAGE_NAME, JSON.stringify(updatedTeam));
     }
   };
 
-  const isPokemonInTeam = team.some((pokemon) => pokemon.id === id);
+  const isPokemonInTeam = team.some((p) => p.id === id);
 
   //Rendered while loading or in case of error
   if (loading) {
@@ -200,6 +190,11 @@ function Pokemon() {
           <img
             src={Image}
             alt={Name}
+            onError={(e) => {
+              if (e.currentTarget.src !== FALLBACK_IMAGE) {
+                e.currentTarget.src = FALLBACK_IMAGE;
+              }
+            }}
             className={`rounded img-fluid ${styles[`${FirstType}_medium`]} ${
               styles[`shadow-${FirstType}`]
             }`}
@@ -239,7 +234,7 @@ function Pokemon() {
         <p className="fs-5 mb-1 fw-semibold">
           {Types && Types.length > 1 ? "Types" : "Type"}
         </p>
-        <div className="d-flex flex-row align-items center justify-content-center mb-1">
+        <div className="d-flex flex-row align-items-center justify-content-center mb-1">
           {Types &&
             Types.map((type) => (
               <span
@@ -268,7 +263,7 @@ function Pokemon() {
         <p className="fs-5 mb-1 fw-semibold">
           {Abilities && Abilities.length > 1 ? "Abilities" : "Ability"}
         </p>
-        <div className="d-flex flex-row align-items center justify-content-center mb-1">
+        <div className="d-flex flex-row align-items-center justify-content-center mb-1">
           {Abilities &&
             Abilities.map((ability, index) => (
               <span
@@ -342,10 +337,10 @@ function Pokemon() {
                 capitalize={capitalizeFirstLetter}
               />
             ))}
-            {pokemonSpecies && pokemonSpecies.egg_group && (
+            {pokemonSpecies && pokemonSpecies.egg_groups && (
               <div className="mx-3">
                 <p className="fs-5 mb-1 fw-semibold">Egg groups</p>
-                <p className="fs-6 mb-1">
+                <div className="fs-6 mb-1">
                   {pokemonSpecies.egg_groups.map((egg_group) => (
                     <span
                       key={egg_group.name}
@@ -357,7 +352,7 @@ function Pokemon() {
                       {capitalizeFirstLetter(egg_group.name)}
                     </span>
                   ))}
-                </p>
+                </div>
               </div>
             )}
           </div>
