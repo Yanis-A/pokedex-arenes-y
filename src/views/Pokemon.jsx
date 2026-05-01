@@ -159,9 +159,8 @@ function Pokemon() {
 
   return (
     <div
-      className="container-fluid d-flex flex-column flex-lg-row position-relative"
+      className="container-fluid d-flex flex-column flex-lg-row position-relative flex-grow-1"
       style={{
-        minHeight: "90vh",
         backgroundColor: getColorForType(Types ? LastType : "", 0.1),
       }}
     >
@@ -225,8 +224,6 @@ function Pokemon() {
       <div
         className={
           "d-flex flex-grow-1 flex-column align-items-center text-center " +
-          stylesPokemon.max_height_lg +
-          " " +
           stylesPokemon.responsive_w_50
         }
       >
@@ -297,27 +294,16 @@ function Pokemon() {
               type={FirstType}
             />
           ))}
-        <div className="d-flex flex-row flex-wrap justify-content-center align-items-center mb-1">
-          {pokemon && pokemon.stats && (
+        {pokemon?.stats && (
+          <div className="d-flex flex-row flex-wrap justify-content-center align-items-center mb-1">
             <div className="mx-3">
               <p className="fs-5 mb-1 fw-semibold">Total</p>
               <p className="fs-6 mb-1">
                 {pokemon.stats.reduce((acc, stat) => acc + stat.base_stat, 0)}
               </p>
             </div>
-          )}
-          {pokemon && pokemon.stats && (
-            <div className="mx-3">
-              <p className="fs-5 mb-1 fw-semibold">Average</p>
-              <p className="fs-6 mb-1">
-                {(
-                  pokemon.stats.reduce((acc, stat) => acc + stat.base_stat, 0) /
-                  pokemon.stats.length
-                ).toFixed(2)}
-              </p>
-            </div>
-          )}
-        </div>
+          </div>
+        )}
         <hr
           style={{ width: "300px" }}
           className="border border-secondary border-1 opacity-50 m-1"

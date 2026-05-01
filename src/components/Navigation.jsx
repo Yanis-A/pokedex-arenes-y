@@ -47,7 +47,7 @@ function Navigation() {
             </li>
             <li className="nav-item d-flex align-items-center ms-1 ms-lg-0">
               <Link to="/pokedex" className="nav-link">
-                Pokedex
+                Pokédex
               </Link>
             </li>
             {!isPokemonPage && (
@@ -72,7 +72,7 @@ function Navigation() {
                 title="See in Pokedex"
                 className={"btn text-white " + styles.pokeball_red_bg}
               >
-                My Team : {team.length} Pokémon{team.length !== 1 ? "s" : ""}
+                My Team : {team.length} Pokémon
               </Link>
             </li>
           </ul>

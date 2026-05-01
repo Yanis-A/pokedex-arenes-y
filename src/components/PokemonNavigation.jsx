@@ -10,7 +10,7 @@ function PokemonNavigation({ id, min, max }) {
         <Link
           to={`/pokemon/${id - 1}`}
           title="Previous Pokémon"
-          className="btn btn-outline-dark position-fixed top-50 start-0 translate-middle-y m-3"
+          className="btn btn-outline-dark position-fixed top-50 start-0 translate-middle-y m-3 d-none d-lg-inline-flex"
           style={{ zIndex: 1000 }}
         >
           <FontAwesomeIcon icon={faChevronLeft} />
@@ -20,7 +20,7 @@ function PokemonNavigation({ id, min, max }) {
         <Link
           to={`/pokemon/${id + 1}`}
           title="Next Pokémon"
-          className="btn btn-outline-dark position-fixed top-50 end-0 translate-middle-y m-3"
+          className="btn btn-outline-dark position-fixed top-50 end-0 translate-middle-y m-3 d-none d-lg-inline-flex"
           style={{ zIndex: 1000 }}
         >
           <FontAwesomeIcon icon={faChevronRight} />

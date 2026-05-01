@@ -18,15 +18,15 @@ function StatBar({ name, value, type }) {
         }}
       >
         <div
-          className="progress-bar progress-bar-striped progress-bar-animated text-black fw-bolder"
+          className="progress-bar text-black fw-bolder"
           role="progressbar"
           style={{
             width: `${(value * 100) / 255}%`,
             backgroundColor: getColorForType(type, MediumOpacity),
           }}
           aria-valuenow={value}
-          aria-valuemin="0"
-          aria-valuemax="100"
+          aria-valuemin={0}
+          aria-valuemax={255}
         >
           {value}
         </div>

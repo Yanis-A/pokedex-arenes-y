@@ -4,10 +4,10 @@ import Navigation from './components/Navigation.jsx'
 
 function App() {
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100">
       <Navigation />
       <AppRoutes />
-    </>
+    </div>
   )
 }
 
