@@ -355,6 +355,30 @@
   color: black;
 }
 
+/* Tint pills (abilities, egg groups) sit on a translucent type color that turns
+   dark in dark mode, so let their label follow the theme's body color instead of
+   a hard-coded black that would disappear. */
+.bug_light,
+.dark_light,
+.dragon_light,
+.electric_light,
+.fairy_light,
+.fighting_light,
+.fire_light,
+.flying_light,
+.ghost_light,
+.grass_light,
+.ground_light,
+.ice_light,
+.normal_light,
+.poison_light,
+.psychic_light,
+.rock_light,
+.steel_light,
+.water_light {
+  color: var(--bs-body-color);
+}
+
 /* Shadows */
 
 .shadow-normal {

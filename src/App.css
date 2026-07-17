@@ -23,6 +23,28 @@
   background-color: rgba(128, 128, 128, 0.18);
 }
 
+/* Outline button that stays legible in both light and dark themes. Bootstrap's
+   btn-outline-dark keeps a dark border/label that vanishes on a dark background,
+   so drive the colors from the theme's body tokens instead. */
+.btn.btn-outline-body {
+  --bs-btn-color: var(--bs-body-color);
+  --bs-btn-border-color: var(--bs-body-color);
+  --bs-btn-hover-color: var(--bs-body-bg);
+  --bs-btn-hover-bg: var(--bs-body-color);
+  --bs-btn-hover-border-color: var(--bs-body-color);
+  --bs-btn-active-color: var(--bs-body-bg);
+  --bs-btn-active-bg: var(--bs-body-color);
+  --bs-btn-active-border-color: var(--bs-body-color);
+  --bs-btn-focus-shadow-rgb: var(--bs-emphasis-color-rgb);
+}
+
+/* De-emphasized text that still clears a comfortable contrast ratio in dark mode
+   (plain text-secondary/text-muted read as barely-visible on the dark theme). */
+.text-soft {
+  color: var(--bs-body-color) !important;
+  opacity: 0.85;
+}
+
 *{
   scroll-behavior: smooth;
   scrollbar-width: thin;

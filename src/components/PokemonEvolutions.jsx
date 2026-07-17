@@ -69,7 +69,7 @@ function ChainNode({ node, currentName, capitalize }) {
 
   const linkClass = isCurrent
     ? "fs-6 fw-bold text-body text-decoration-none evolution-link"
-    : "fs-6 text-secondary text-decoration-none evolution-link";
+    : "fs-6 text-soft text-decoration-none evolution-link";
 
   const NameLink = id ? (
     <Link to={`/pokemon/${id}`} className={linkClass} title={name}>
@@ -101,7 +101,7 @@ function ChainNode({ node, currentName, capitalize }) {
               key={child.species.name}
               className="d-flex flex-row align-items-center mb-1"
             >
-              <span className="d-flex flex-column align-items-center mx-2 small text-muted">
+              <span className="d-flex flex-column align-items-center mx-2 small text-soft">
                 <FontAwesomeIcon icon={faArrowRight} />
                 {condition && (
                   <span className="text-nowrap" style={{ fontSize: "0.75rem" }}>

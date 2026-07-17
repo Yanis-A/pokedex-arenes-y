@@ -214,7 +214,7 @@ function Pokemon() {
               }}
               title={playingCry ? "Playing..." : "Play cry"}
               aria-label={`Play ${Name}'s cry`}
-              className="btn btn-outline-secondary rounded-circle d-inline-flex align-items-center justify-content-center"
+              className="btn btn-outline-body rounded-circle d-inline-flex align-items-center justify-content-center"
               style={{ width: "2.25rem", height: "2.25rem", padding: 0 }}
             >
               <FontAwesomeIcon icon={faVolumeHigh} />
@@ -255,7 +255,7 @@ function Pokemon() {
           type="button"
           title={!isPokemonInTeam ? "Add" : "Remove"}
           onClick={handleToggleTeam}
-          className={"btn ms-1 flex-grow-0 btn-outline-dark"}
+          className={"btn ms-1 flex-grow-0 btn-outline-body"}
         >
           {isPokemonInTeam ? (
             <>
@@ -315,7 +315,7 @@ function Pokemon() {
               <span
                 key={index}
                 className={
-                  "badge fw-normal fs-6 m-1 py-1 rounded-pill text-black " +
+                  "badge fw-normal fs-6 m-1 py-1 rounded-pill " +
                   styles[`${FirstType}_light`]
                 }
               >
@@ -380,7 +380,7 @@ function Pokemon() {
                     <span
                       key={egg_group.name}
                       className={
-                        "badge fw-normal fs-6 m-1 py-1 rounded-pill text-black " +
+                        "badge fw-normal fs-6 m-1 py-1 rounded-pill " +
                         styles[`${FirstType}_light`]
                       }
                     >

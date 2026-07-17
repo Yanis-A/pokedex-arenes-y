@@ -16,7 +16,7 @@ function PokemonNavigation({ id, min, max }) {
             to={`/pokemon/${id - 1}`}
             title="Previous Pokémon"
             aria-label={`Previous Pokémon, #${id - 1}`}
-            className="btn btn-outline-dark"
+            className="btn btn-outline-body"
           >
             <FontAwesomeIcon icon={faChevronLeft} /> #{id - 1}
           </Link>
@@ -28,7 +28,7 @@ function PokemonNavigation({ id, min, max }) {
             to={`/pokemon/${id + 1}`}
             title="Next Pokémon"
             aria-label={`Next Pokémon, #${id + 1}`}
-            className="btn btn-outline-dark"
+            className="btn btn-outline-body"
           >
             #{id + 1} <FontAwesomeIcon icon={faChevronRight} />
           </Link>
@@ -43,7 +43,7 @@ function PokemonNavigation({ id, min, max }) {
           to={`/pokemon/${id - 1}`}
           title="Previous Pokémon"
           aria-label={`Previous Pokémon, #${id - 1}`}
-          className="btn btn-outline-dark position-fixed top-50 start-0 translate-middle-y m-3 d-none d-lg-inline-flex"
+          className="btn btn-outline-body position-fixed top-50 start-0 translate-middle-y m-3 d-none d-lg-inline-flex"
           style={{ zIndex: 1000 }}
         >
           <FontAwesomeIcon icon={faChevronLeft} />
@@ -54,7 +54,7 @@ function PokemonNavigation({ id, min, max }) {
           to={`/pokemon/${id + 1}`}
           title="Next Pokémon"
           aria-label={`Next Pokémon, #${id + 1}`}
-          className="btn btn-outline-dark position-fixed top-50 end-0 translate-middle-y m-3 d-none d-lg-inline-flex"
+          className="btn btn-outline-body position-fixed top-50 end-0 translate-middle-y m-3 d-none d-lg-inline-flex"
           style={{ zIndex: 1000 }}
         >
           <FontAwesomeIcon icon={faChevronRight} />
