@@ -56,7 +56,7 @@ To deploy:
 npm run deploy
 ```
 
-You'll need the Firebase CLI installed (`npm i -g firebase-tools`) and to be logged in (`firebase login`). The default project is `reactdex-3e301`.
+You'll need the Firebase CLI installed (`npm i -g firebase-tools`) and to be logged in (`firebase login`). The default project is `reactdex-3e301` (see `.firebaserc`); within it, `npm run deploy` publishes the build to the hosting site `thereactdex` (see `firebase.json`).
 
 ## Views
 
