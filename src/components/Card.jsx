@@ -51,7 +51,7 @@ function Card({ id, name }) {
         }
         aria-pressed={isPokemonInTeam}
         onClick={handleToggleTeam}
-        className="btn btn-sm btn-light shadow-sm position-absolute top-0 end-0 m-2 rounded-circle d-inline-flex align-items-center justify-content-center"
+        className="btn btn-sm team-toggle-btn shadow-sm position-absolute top-0 end-0 m-2 rounded-circle d-inline-flex align-items-center justify-content-center"
         style={{ width: "2rem", height: "2rem", padding: 0, zIndex: 2 }}
       >
         <FontAwesomeIcon icon={isPokemonInTeam ? faMinus : faPlus} />

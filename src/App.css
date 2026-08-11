@@ -38,6 +38,24 @@
   --bs-btn-focus-shadow-rgb: var(--bs-emphasis-color-rgb);
 }
 
+/* Floating add/remove-from-team button on the cards. Bootstrap's btn-light is
+   hard-coded to a white face, which reads as a bright blob on the dark theme, so
+   drive the colors from the theme's surface tokens instead. Slightly translucent
+   so it settles over the sprite in either theme. */
+.btn.team-toggle-btn {
+  --bs-btn-color: var(--bs-body-color);
+  --bs-btn-bg: rgba(var(--bs-body-bg-rgb), 0.85);
+  --bs-btn-border-color: var(--bs-border-color);
+  --bs-btn-hover-color: var(--bs-body-bg);
+  --bs-btn-hover-bg: var(--bs-body-color);
+  --bs-btn-hover-border-color: var(--bs-body-color);
+  --bs-btn-active-color: var(--bs-body-bg);
+  --bs-btn-active-bg: var(--bs-body-color);
+  --bs-btn-active-border-color: var(--bs-body-color);
+  --bs-btn-focus-shadow-rgb: var(--bs-emphasis-color-rgb);
+  backdrop-filter: blur(2px);
+}
+
 /* De-emphasized text that still clears a comfortable contrast ratio in dark mode
    (plain text-secondary/text-muted read as barely-visible on the dark theme). */
 .text-soft {
