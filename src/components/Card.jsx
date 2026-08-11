@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { togglePokemonInTeam } from "../service/globalPropsSlice";
 import { Link } from "react-router-dom";
@@ -13,6 +14,10 @@ function Card({ id, name }) {
   const { team } = useSelector((state) => state.globalProps);
 
   const dispatch = useDispatch();
+
+  // Sprites are fetched from GitHub and take a beat to arrive; track load state
+  // so we can show a skeleton and fade the image in instead of popping it.
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   const Image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
 
@@ -56,17 +61,43 @@ function Card({ id, name }) {
       >
         <FontAwesomeIcon icon={isPokemonInTeam ? faMinus : faPlus} />
       </button>
-      <img
-        src={Image}
-        className="card-img-top"
-        alt={Name}
-        loading="lazy"
-        onError={(e) => {
-          if (e.currentTarget.src !== FALLBACK_IMAGE) {
-            e.currentTarget.src = FALLBACK_IMAGE;
-          }
+      <div
+        className="card-img-wrap position-relative w-100 overflow-hidden bg-body-tertiary"
+        style={{
+          aspectRatio: "1 / 1",
+          borderTopLeftRadius: "var(--bs-card-inner-border-radius)",
+          borderTopRightRadius: "var(--bs-card-inner-border-radius)",
         }}
-      />
+      >
+        {!imgLoaded && (
+          <span
+            className="placeholder-glow position-absolute top-0 start-0 w-100 h-100"
+            aria-hidden="true"
+          >
+            <span className="placeholder w-100 h-100 d-block" />
+          </span>
+        )}
+        <img
+          src={Image}
+          className="card-img-top w-100 h-100"
+          style={{
+            objectFit: "contain",
+            opacity: imgLoaded ? 1 : 0,
+            transition: "opacity 250ms ease",
+          }}
+          alt={Name}
+          loading="lazy"
+          onLoad={() => setImgLoaded(true)}
+          onError={(e) => {
+            if (e.currentTarget.src !== FALLBACK_IMAGE) {
+              e.currentTarget.src = FALLBACK_IMAGE;
+            } else {
+              // Even the fallback failed — reveal so the skeleton doesn't hang.
+              setImgLoaded(true);
+            }
+          }}
+        />
+      </div>
       <div className="card-body text-center d-flex flex-column">
         <small>#{id}</small>
         <h5 className="card-title fw-bold mb-0">{Name}</h5>
