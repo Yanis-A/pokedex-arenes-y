@@ -22,8 +22,8 @@ function Navigation() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const isHome = location.pathname === "/";
-  const isListPage = isHome || location.pathname === "/pokedex";
+  const isListPage =
+    location.pathname === "/" || location.pathname === "/pokedex";
 
   // Sync URL ?q= → Redux on list pages so refresh / browser-back rebuilds the
   // filter state from the URL.
@@ -33,16 +33,15 @@ function Navigation() {
     if (q !== search) dispatch(setSearch(q));
   }, [searchParams, isListPage, dispatch, search]);
 
+  // Track scroll only to give the navbar a subtle elevation once the page moves.
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 100);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const showNavLogo = !isHome || scrolled;
 
   const [theme, setTheme] = useState(
     () => localStorage.getItem(THEME_KEY) || "light"
@@ -66,13 +65,16 @@ function Navigation() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg sticky-top bg-body-tertiary shadow">
+    <nav
+      className={
+        "navbar navbar-expand-lg sticky-top bg-body-tertiary app-navbar" +
+        (scrolled ? " is-scrolled" : "")
+      }
+    >
       <div className="container-fluid">
-        {showNavLogo && (
-          <Link to="/" className="navbar-brand">
-            <img width={150} src={logo} alt="ReactDex Logo" />
-          </Link>
-        )}
+        <Link to="/" className="navbar-brand" aria-label="ReactDex — home">
+          <img width={150} src={logo} alt="ReactDex" />
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
