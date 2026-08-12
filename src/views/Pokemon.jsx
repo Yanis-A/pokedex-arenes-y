@@ -179,7 +179,7 @@ function Pokemon() {
 
   return (
     <div
-      className="container-fluid d-flex flex-column flex-lg-row position-relative flex-grow-1"
+      className="container-fluid d-flex flex-column flex-lg-row position-relative flex-grow-1 fade-in-up"
       style={{
         backgroundColor: getColorForType(Types ? LastType : "", 0.1),
       }}

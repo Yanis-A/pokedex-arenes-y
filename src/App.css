@@ -63,6 +63,78 @@
   opacity: 0.85;
 }
 
+/* ---- Motion / eye-candy -------------------------------------------------- */
+
+/* Soft entrance used on hero + page containers so route changes feel smooth
+   instead of snapping into place. */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Navbar lifts off the page once you scroll: a touch more shadow and an opaque
+   background, transitioned so it reads as a smooth settle rather than a flip. */
+.app-navbar {
+  transition: box-shadow 250ms ease, background-color 250ms ease;
+}
+.app-navbar.is-scrolled {
+  background-color: var(--bs-body-bg) !important;
+  box-shadow: 0 0.35rem 1rem rgba(0, 0, 0, 0.18) !important;
+}
+
+/* Navbar brand logo: subtle grow on hover so it feels alive as the home anchor. */
+.navbar-brand img {
+  transition: transform 200ms ease, filter 200ms ease;
+}
+.navbar-brand:hover img,
+.navbar-brand:focus-visible img {
+  transform: scale(1.04);
+}
+
+/* Cards lift toward the pointer and zoom their sprite a hair on hover. */
+.card-hover {
+  transition: transform 200ms ease, box-shadow 200ms ease;
+  will-change: transform;
+}
+.card-hover:hover,
+.card-hover:focus-visible {
+  transform: translateY(-5px);
+  box-shadow: 0 0.6rem 1.25rem rgba(0, 0, 0, 0.18) !important;
+}
+.card-hover:hover .card-img-top {
+  transform: scale(1.06);
+}
+
+/* Respect users who ask for less motion: drop entrances and transforms. */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in-up {
+    animation: none;
+  }
+  .app-navbar,
+  .navbar-brand img,
+  .card-hover,
+  .card-hover .card-img-top {
+    transition: none;
+  }
+  .card-hover:hover,
+  .card-hover:focus-visible {
+    transform: none;
+  }
+  .card-hover:hover .card-img-top {
+    transform: none;
+  }
+}
+
 *{
   scroll-behavior: smooth;
   scrollbar-width: thin;

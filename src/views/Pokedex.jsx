@@ -8,7 +8,7 @@ function Pokedex() {
   );
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid fade-in-up">
       <div className="d-flex flex-column align-items-center my-3">
         <h1>Pokédex</h1>
         <p className="fs-5 text-secondary mb-4">Manage your Pokémon team here!</p>

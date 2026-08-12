@@ -23,8 +23,14 @@ function List() {
 
   return (
     <div className="container-fluid">
-      <div className="d-flex flex-column align-items-center my-3 fs-5">
-        <img width={300} src={Logo} alt="ReactDex Logo" />
+      <div className="d-flex flex-column align-items-center my-3 fs-5 fade-in-up">
+        <img
+          width={260}
+          src={Logo}
+          alt="ReactDex"
+          className="img-fluid mb-2"
+          style={{ maxWidth: "80vw" }}
+        />
         <p className="mb-1">
           Welcome{" "}
           <span className={"fw-bold " + styles.pokeball_red}>{adjective}</span>{" "}

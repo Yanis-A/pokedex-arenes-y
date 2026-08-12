@@ -36,7 +36,7 @@ function Card({ id, name }) {
     <Link
       to={`/pokemon/${id}`}
       aria-label={`View details of ${Name}`}
-      className="card h-100 shadow-sm position-relative d-flex flex-column align-items-center text-decoration-none text-body"
+      className="card card-hover h-100 shadow-sm position-relative d-flex flex-column align-items-center text-decoration-none text-body"
       style={{
         width: "10rem",
         outline: isPokemonInTeam
@@ -83,7 +83,7 @@ function Card({ id, name }) {
           style={{
             objectFit: "contain",
             opacity: imgLoaded ? 1 : 0,
-            transition: "opacity 250ms ease",
+            transition: "opacity 250ms ease, transform 300ms ease",
           }}
           alt={Name}
           loading="lazy"
